@@ -17,14 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/checkRoom', function () {
-    return [
-    	'roomok' => true,
-    ];
-});
-
 Route::post('/resetPassword', function () {
     return [
+    	'roomok' => true,
     	'sendok' => true,
     ];
 });

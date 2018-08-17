@@ -26,38 +26,33 @@ Selvbetjening - nulstil kodeord
 		</p>
 	</user-consent>
 	<password-reset v-if="consent">
-		<form v-on:submit.prevent>
+		<form @submit="sendResetRequest">
 		  <div class="form-group">
 		    <label for="roomNumber">Værelsesnummer</label>
-		    <input type="number" min=2 max=299 class="form-control" id="roomNumber" v-model="roomNumber" aria-describedby="roomNumberHelp" placeholder="Værelsesnummer" required :disabled="roomok || roomok === false">
+		    <input type="number" min=2 max=299 class="form-control" id="roomNumber" v-model="roomNumber" aria-describedby="roomNumberHelp" placeholder="Værelsesnummer" required :disabled="sendok || loading">
 		    <small id="roomNumberHelp" class="form-text text-muted">Angiv dit værelsesnummer.</small>
 		  </div>
-		</form>
-
-		<form v-on:submit.prevent v-if="roomok && roomNumber != ''">
 		  <div class="form-group">
 		    <label for="Email">E-mail</label>
-		    <input type="email" class="form-control" id="Email" v-model="email" aria-describedby="emailHelp" placeholder="E-mail" required :disabled="sendok">
+		    <input type="email" class="form-control" id="Email" v-model="email" aria-describedby="emailHelp" placeholder="E-mail" required :disabled="sendok || loading">
 		    <small id="emailHelp" class="form-text text-muted">Angiv din e-mail addresse.</small>
 		  </div>
+
+			<div class="alert alert-danger" v-if="roomok === false">
+				<strong>Fejl!</strong> Dit kodeord kan ikke nulstilles via selvbetjeningen. Du bedes tage kontakt til en fra netværksudvalget.
+			</div>
+
+			<center v-if="roomok !== false && sendok !== true">
+				<input type=submit v-if="loading" class="btn btn-secondary" disabled="" value="Vent venligst..">
+			    <input type=submit v-else-if="roomNumber === '' || email === ''" class="btn btn-secondary" disabled value="Nulstil kodeord">
+			    <input type=submit v-else @click="sendResetRequest" class="btn btn-primary" value="Nulstil kodeord">
+			</center>
+		    <div class="alert alert-success" v-if="sendok">
+		    	<strong>Success!</strong> Hvis den korrekte e-mail addresse er oplyst, vil du om lidt modtage en mail med et link. Tryk på dette link for at nulstille din kode.
+		    </div>
 		</form>
-
-		<p v-if="roomok === false">
-			Dit kodeord kan ikke nulstilles via selvbetjeningen. Du bedes tage kontakt til en fra netværksudvalget.
-		</p>
-
-		<center v-if="roomok !== false">
-			<button v-if="loading" type="button" class="btn btn-secondary" disabled="">Vent venligst..</button>
-			<button v-else-if="sendok" type="button" class="btn btn-success" disabled>Sendt</button>
-			<button v-else-if="roomNumber === ''" type="button" class="btn btn-secondary" disabled>Næste</button>
-		    <button v-else-if="roomok && email === ''" type="button" class="btn btn-secondary" disabled="">Nulstil kodeord</button>
-		    <button v-else-if="roomok" @click="sendResetRequest" type="button" class="btn btn-primary">Nulstil kodeord</button>
-		    <button v-else @click="checkRoom" type="button" class="btn btn-primary">Næste</button>
-
-		    <p v-if="sendok"><b>Hvis den korrekte e-mail addresse er oplyst, vil du om lidt modtage en mail med et link. Tryk på dette link for at nulstille din kode.</b></p>
-		</center>
 	</password-reset>
-	<noscript>JavaScript must be enabled</noscript>
+	<noscript>Siden virker ikke uden JavaScript</noscript>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js" integrity="sha256-FtWfRI+thWlNz2sB3SJbwKx5PgMyKIVgwHCTwa3biXc=" crossorigin="anonymous"></script>
@@ -66,22 +61,10 @@ Selvbetjening - nulstil kodeord
         <script>
             Vue.component('user-consent', {
                 template: '<p><slot></slot></p>',
-
-                data() {
-                    return {
-                        message: 'Foobar'
-                    }
-                }
             })
 
             Vue.component('password-reset', {
                 template: '<p><slot></slot></p>',
-
-                data() {
-                    return {
-                        message: 'Foobar'
-                    }
-                }
             })
 
             new Vue({
@@ -96,24 +79,16 @@ Selvbetjening - nulstil kodeord
                 },
 
                 methods: {
-                    checkRoom() {
-                    	this.loading = true;
-                        axios.post('/api/checkRoom', {
-                        	roomNumber: this.roomNumber,
-                        })
-                        .then(reponse => {
-                        	this.roomok = reponse.data['roomok'];
-                        	this.loading = false;
-                        })
-                        .catch(error => alert(error));
-                    },
                     sendResetRequest() {
+                    	event.preventDefault();
                     	this.loading = true;
                     	axios.post('/api/resetPassword', {
+                        	consent: this.consent,
                         	roomNumber: this.roomNumber,
                         	email: this.email,
                         })
                         .then(reponse => {
+                        	this.roomok = reponse.data['roomok'];
                         	this.sendok = reponse.data['sendok'];
                         	this.loading = false;
                         })
