@@ -121,7 +121,7 @@ class Knet extends Model
     public function patchUser($url, $password = '',$username = '',$resetguest = false)
     {
     	// Check url format, exception if wrong
-    	if (!preg_match('/https:\/\/k-net\.dk\/api\/v2\/network\/user\/[0-9]{1,}\/$/',$url))
+    	if (!preg_match('/^https:\/\/k-net\.dk\/api\/v2\/network\/user\/[0-9]{1,}\/$/',$url))
     	{
     		throw new \Exception('Url format is not a K-net user.');
     	}
