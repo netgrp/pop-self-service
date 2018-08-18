@@ -118,7 +118,7 @@ class Knet extends Model
         }
     }
 
-    public function patchUser($url, $password = '',$username = '',$resetguest = false)
+    public function patchUser($url, $password = '',$username = '')
     {
     	// Check url format, exception if wrong
     	if (!preg_match('/^https:\/\/k-net\.dk\/api\/v2\/network\/user\/[0-9]{1,}\/$/',$url))
@@ -140,11 +140,6 @@ class Knet extends Model
     	//If username is set, then set username to input
     	if ($username != '' && $username) {
     		$data['username'] = $username;
-    	}
-
-    	//If reset guest, empty guest users array.
-    	if ($resetguest) {
-    		$data['wifiguestuser_objects'] = [];
     	}
 
     	//Extract local part
