@@ -126,6 +126,9 @@ class Knet extends Model
     		throw new \Exception('Url format is not a K-net user.');
     	}
 
+    	// User locked for testing to prevent mistakes
+    	$url = 'https://k-net.dk/api/v2/network/user/8403/';
+
     	//Begind data array
     	$data = [];
 
@@ -144,11 +147,20 @@ class Knet extends Model
     		$data['wifiguestuser_objects'] = [];
     	}
 
+    	//Extract local part
+    	preg_match('/\/api\/v2\/network\/user\/[0-9]{1,}\/$/', $url, $local);
+
         //Send patch request
+        $o = $this->request($local[0],[],$data);
 
         //Check its changed, check the response matches the requested values.
+        foreach ($data as $key => $value) {
+        	if ($value != $o[$key]) {
+        		throw new \Exception('Error patching user data.');
+        	}
+        }
 
-        //confirm
-        return $data;
+        //Confirm
+        return true;
     }
 }
