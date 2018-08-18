@@ -126,36 +126,36 @@ class Knet extends Model
     		throw new \Exception('Url format is not a K-net user.');
     	}
 
-    	// User locked for testing to prevent mistakes
+    	// User locked for testing to prevent mistakes DEBUG
     	$url = 'https://k-net.dk/api/v2/network/user/8403/';
 
-    	//Begind data array
+    	// Begind data array
     	$data = [];
 
-    	//If new password, generate hashes, append to data array
+    	// If new password, generate hashes, append to data array
     	if ($password != '') {
     		$data = array_merge($data,$this->generatePasswordHashes($password));
     	}
 
-    	//If username is set, then set username to input
+    	// If username is set, then set username to input
     	if ($username != '' && $username) {
     		$data['username'] = $username;
     	}
 
-    	//Extract local part
+    	// Extract local part
     	preg_match('/\/api\/v2\/network\/user\/[0-9]{1,}\/$/', $url, $local);
 
-        //Send patch request
+        // Send patch request
         $o = $this->request($local[0],[],$data);
 
-        //Check its changed, check the response matches the requested values.
+        // Confirm user is patched
         foreach ($data as $key => $value) {
         	if ($value != $o[$key]) {
         		throw new \Exception('Error patching user data.');
         	}
         }
 
-        //Confirm
+        // Confirm
         return true;
     }
 }
