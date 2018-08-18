@@ -77,21 +77,6 @@ class Knet extends Model
         return $resobj;
     }
 
-    protected function random_str(
-    $length = 12,
-    $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-) {
-        $str = '';
-        $max = mb_strlen($keyspace, '8bit') - 1;
-        if ($max < 1) {
-            throw new Exception('$keyspace must be at least two characters long');
-        }
-        for ($i = 0; $i < $length; ++$i) {
-            $str .= $keyspace[random_int(0, $max)];
-        }
-        return $str;
-    }
-
     public function getAllUsers()
     {
         return $this->request('/api/v2/network/user/?page_size=0');
@@ -126,7 +111,7 @@ class Knet extends Model
         // Check url format, exception if wrong
 
     	// Generate salt
-    	$salt = $this->random_str();
+    	$salt = str_random(12);
 
         //calculate new hashes
         $data = [
