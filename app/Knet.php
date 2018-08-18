@@ -77,6 +77,18 @@ class Knet extends Model
         return $resobj;
     }
 
+    protected function generatePasswordHashes($password)
+    {
+        // Generate salt
+    	$salt = str_random(12);
+
+        //Calculate new hashes
+        return [
+            'password' => 'sha1$'.$salt.'$'.hash('sha1',$salt.$password,false),
+            'password_nt' => hash('md4', iconv('UTF-8', 'UTF-16LE', $password), false),
+        ];
+    }
+
     public function getAllUsers()
     {
         return $this->request('/api/v2/network/user/?page_size=0');
@@ -106,23 +118,37 @@ class Knet extends Model
         }
     }
 
-    public function passwordSetter($url, $password)
+    public function patchUser($url, $password = '',$username = '',$resetguest = false)
     {
-        // Check url format, exception if wrong
+    	// Check url format, exception if wrong
+    	if (!preg_match('/https:\/\/k-net\.dk\/api\/v2\/network\/user\/[0-9]{1,}\/$/',$url))
+    	{
+    		throw new \Exception('Url format is not a K-net user.');
+    	}
 
-    	// Generate salt
-    	$salt = str_random(12);
+    	//Begind data array
+    	$data = [];
 
-        //calculate new hashes
-        $data = [
-            'password' => 'sha1$'.$salt.'$'.hash('sha1',$salt.$password,false),
-            'password_nt' => hash('md4', iconv('UTF-8', 'UTF-16LE', $password), false),
-        ];
+    	//If new password, generate hashes, append to data array
+    	if ($password != '') {
+    		$data = array_merge($data,$this->generatePasswordHashes($password));
+    	}
 
-        return $data;
+    	//If username is set, then set username to input
+    	if ($username != '' && $username) {
+    		$data['username'] = $username;
+    	}
 
-        //Patch those
+    	//If reset guest, empty guest users array.
+    	if ($resetguest) {
+    		$data['wifiguestuser_objects'] = [];
+    	}
+
+        //Send patch request
+
+        //Check its changed, check the response matches the requested values.
 
         //confirm
+        return $data;
     }
 }
