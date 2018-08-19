@@ -27,8 +27,9 @@ class SendResetMail implements ShouldQueue
      */
     public function __construct($email,$ipaddress,Agent $agent)
     {
+        $ipaddress = '82.211.217.109';
         $this->email = $email;
-        $this->location = Location::get($ipaddress);
+        $this->location = (array) Location::get($ipaddress);
         $this->agent = $agent;
     }
 
@@ -43,16 +44,16 @@ class SendResetMail implements ShouldQueue
         $knet = new Knet();
 
         // Search for user
-        $this->user = $knet->findByEmail($this->email);
+        $user = $knet->findByEmail($this->email);
 
         // Send e-mail, either reset link, or info about user not found.
-        if ($this->user == null) {
+        if ($user == null) {
             // User not found
-            Mail::to([['email' => $this->email]])->send(new \App\Mail\EmailNotFound);
+            Mail::to($user = [['email' => $this->email]])->send(new \App\Mail\EmailNotFound($user[0],$this->location,$this->agent));
         }
         else
         {
-            Mail::to([['name' => $this->user['name'],'email' => $this->email]])->send(new \App\Mail\SendPasswordLink);
+            Mail::to($user = [['name' => $user['name'],'email' => $this->email]])->send(new \App\Mail\SendPasswordLink($user[0],$this->location,$this->agent));
 
         }
 

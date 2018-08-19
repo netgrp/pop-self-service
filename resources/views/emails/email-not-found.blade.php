@@ -1,9 +1,9 @@
 @component('mail::message')
-PREHEADER: Vi har modtaget en anmodning om at nulstille din kode med denne e-mail adresse. ([email_address])
+PREHEADER: Vi har modtaget en anmodning om at nulstille din kode med denne e-mail adresse. ({{ $user['email'] }})
 
-# Hej [Navn]
+# Hej
 
-Vi har modtaget en anmodning om at nulstille koden til at tilgå din K-Net bruger hos {{config('app.name')}} med din e-mail adresse ([email_address]) fra en [OS] enhed ved hjælp af [browser] i [LAND] nær [by], men vi kunne ikke finde en bruger med tilknytning til denne e-mail adresse.
+Vi har modtaget en anmodning om at nulstille koden til at tilgå din K-Net bruger hos {{config('app.name')}} med din e-mail adresse ({{ $user['email'] }}) fra en {{ $agent->platform() }} enhed ved hjælp af {{ $agent->browser() }} i {{ $location['countryCode'] }} nær {{ $location['zipCode'] }}, men vi kunne ikke finde en bruger med tilknytning til denne e-mail adresse.
 
 Hvis du er en beboer på {{config('app.name')}} og forventede denne mail, så bør du overveje at anmode om en nulstilling af adgangskoden ved hjælp af den e-mail adresse, der er tilknyttet din bruger.
 
@@ -11,7 +11,7 @@ Hvis du er en beboer på {{config('app.name')}} og forventede denne mail, så b�
 Prøv med en anden email
 @endcomponent
 
-Hvis du ikke er beboer på {{config('app.name')}} og ikke har anmodet om nustilling af din adgangskode, så kan du blot se bort fra denne mail, eller [kontakte netgruppen]({{ config('app.url') }}), hvis du har sprøgsmål. **HUSK ORDENLGIT LINK!**.
+Hvis du ikke er beboer på {{config('app.name')}} og ikke har anmodet om nustilling af din adgangskode, så kan du blot se bort fra denne mail, eller [kontakte netgruppen]({{ config('app.url') }}), hvis du har sprøgsmål.
 
 Med venlig hilsen,<br>
 Netgruppen på {{ config('app.name') }}
