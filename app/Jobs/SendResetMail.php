@@ -45,6 +45,9 @@ class SendResetMail implements ShouldQueue
         // Search for user
         $user = $knet->findByEmail($this->email);
 
+        // Save request to database, and get reset token.
+        
+
         // Send e-mail, either reset link, or info about user not found.
         if ($user == null) {
             // User not found
@@ -52,8 +55,8 @@ class SendResetMail implements ShouldQueue
         }
         else
         {
+            //Send e-mail
             Mail::to($user = [['name' => $user['name'],'email' => $this->email]])->send(new \App\Mail\SendPasswordLink($user[0],$this->agent));
-
         }
 
         // Log the attempt to reset in the database with ip, useragent, and $user
