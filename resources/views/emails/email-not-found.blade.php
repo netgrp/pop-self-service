@@ -3,11 +3,11 @@ PREHEADER: Vi har modtaget en anmodning om at nulstille din kode med denne e-mai
 
 # Hej [Navn]
 
-Vi har modtaget en anmodning om at nulstille koden til at tilgå din K-Net bruger hos {{config('app.name')}} med din e-mail adresse ([email_address]) fra en [OS] enhed ved hjælp af [browser], men vi kunne ikke finde en bruger med tilknytning til denne e-mail adresse.
+Vi har modtaget en anmodning om at nulstille koden til at tilgå din K-Net bruger hos {{config('app.name')}} med din e-mail adresse ([email_address]) fra en [OS] enhed ved hjælp af [browser] i [LAND] nær [by], men vi kunne ikke finde en bruger med tilknytning til denne e-mail adresse.
 
 Hvis du er en beboer på {{config('app.name')}} og forventede denne mail, så bør du overveje at anmode om en nulstilling af adgangskoden ved hjælp af den e-mail adresse, der er tilknyttet din bruger.
 
-@component('mail::button', ['url' => ''])
+@component('mail::button', ['url' => config('app.url')])
 Prøv med en anden email
 @endcomponent
 
@@ -19,7 +19,7 @@ Netgruppen på {{ config('app.name') }}
 @component('mail::subcopy')
 Hvis du har problemer med knappen ovenfor så kan du kopiere og indsætte webadressen nedenfor i din browser:
 
-[ACTION URL]
+{{ config('app.url') }}
 @endcomponent
 
 @endcomponent

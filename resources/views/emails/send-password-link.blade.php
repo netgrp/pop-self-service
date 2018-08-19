@@ -9,10 +9,7 @@ Du har for nyligt anmodet om at nulstille dit kordeord til din K-Net bruger hos 
 Nulstil dit kordord
 @endcomponent
 
-Denne anmodning blev modtaget fra en [OS] enhed ved hjælp af [browser]. Hvis du ikke har lavet denne anmodning, så kan du blot se bort fra denne mail, eller [kontakte netgruppen]({{ config('app.url') }}), hvis du har sprøgsmål. **HUSK ORDENLGIT LINK!**.
-
-- **INFO BEMÆRKNING OM GÆSTE BRUGER HVIS DE FINDES**
-- **INFO OM BRUGERNAVN IKKE MATCHER E-MAIL ELLER DET INDEHOLDER STORE BOGSTAVER/specialtegn**
+Denne anmodning blev modtaget fra en [OS] enhed ved hjælp af [browser] i [LAND] nær [by]. Hvis du ikke har lavet denne anmodning, så kan du blot se bort fra denne mail, eller [kontakte netgruppen]({{ env('SUPPORT_URL') }}), hvis du har sprøgsmål. **HUSK ORDENLGIT LINK!**.
 
 Med venlig hilsen,<br>
 Netgruppen på {{ config('app.name') }}

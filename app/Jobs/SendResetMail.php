@@ -8,11 +8,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
+use Stevebauman\Location\Facades\Location;
 
 class SendResetMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $email;
+    protected $location;
+    protected $agent;
 
     /**
      * Create a new job instance.
@@ -22,9 +28,7 @@ class SendResetMail implements ShouldQueue
     public function __construct($email,$ipaddress,Agent $agent)
     {
         $this->email = $email;
-        $this->ipaddress = $ipaddress;
         $this->location = Location::get($ipaddress);
-        $this->headers = $headers;
         $this->agent = $agent;
     }
 
@@ -44,11 +48,11 @@ class SendResetMail implements ShouldQueue
         // Send e-mail, either reset link, or info about user not found.
         if ($this->user == null) {
             // User not found
-
+            Mail::to([['email' => $this->email]])->send(new \App\Mail\EmailNotFound);
         }
         else
         {
-            // User found
+            Mail::to([['name' => $this->user['name'],'email' => $this->email]])->send(new \App\Mail\SendPasswordLink);
 
         }
 

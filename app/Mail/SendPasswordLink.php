@@ -28,6 +28,7 @@ class SendPasswordLink extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.send-password-link');
+        return $this->markdown('emails.send-password-link')
+                    ->subject('Nulstil kodeord til '.config('app.name'));
     }
 }

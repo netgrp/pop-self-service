@@ -28,6 +28,7 @@ class EmailNotFound extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.email-not-found');
+        return $this->markdown('emails.email-not-found')
+                    ->subject('Nulstil kodeord til '.config('app.name'));
     }
 }

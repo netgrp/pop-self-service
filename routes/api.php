@@ -1,6 +1,8 @@
 <?php
 
+use App\Jobs\SendResetMail;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +19,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/resetPassword', function () {
+Route::post('/resetPassword', function (Request $request) {
+	$validated = $request->validate([
+		'email' => 'required|email',
+	]);
+
+	$agent = new Agent();
+
+	SendResetMail::dispatch($validated['email'],$request->ip(),$agent);
+
     return [
     	'roomok' => true,
     	'sendok' => true,
