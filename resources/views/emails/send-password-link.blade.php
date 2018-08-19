@@ -5,7 +5,7 @@ PREHADER: Brug dette link til at nulstille dit kordeord. Linket er kun gyldigt i
 
 Du har for nyligt anmodet om at nulstille dit kordeord til din K-Net bruger hos {{config('app.name')}}. Brug knappen nedenfor til at nulstille dit det. **Denne mail er kun gyldig i 24 timer.**
 
-@component('mail::button', ['url' => ''])
+@component('mail::button', ['url' => $pass])
 Nulstil dit kordord
 @endcomponent
 
@@ -17,7 +17,7 @@ Netgruppen på {{ config('app.name') }}
 @component('mail::subcopy')
 Hvis du har problemer med knappen ovenfor så kan du kopiere og indsætte webadressen nedenfor i din browser:
 
-[ACTION URL]
+{{$pass}}
 @endcomponent
 
 @endcomponent

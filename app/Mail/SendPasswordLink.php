@@ -16,13 +16,14 @@ class SendPasswordLink extends Mailable
     public $user;
     public $platform;
     public $browser;
-    
+    public $pass;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user, Agent $agent)
+    public function __construct($user, Agent $agent, $pass)
     {
         $this->user = $user;
         $this->agent = $agent;
@@ -38,6 +39,8 @@ class SendPasswordLink extends Mailable
         } else {
             $this->browser = "Ukendt";
         }
+
+        $this->pass = $pass;
     }
 
     /**

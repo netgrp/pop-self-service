@@ -26,7 +26,7 @@ Route::post('/resetPassword', function (Request $request) {
 
 	$agent = new Agent();
 
-	SendResetMail::dispatch($validated['email'],$request->ip(),$agent);
+	SendResetMail::dispatch($validated['email'],$request->ip(),$agent,$request->header('user-agent'));
 
     return [
     	'roomok' => true,

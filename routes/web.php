@@ -11,6 +11,5 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'ResetRequestsController@index');
+Route::get('/reset/{pass}', 'ResetRequestsController@show')->name('reset.show');
