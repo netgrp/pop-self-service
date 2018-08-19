@@ -10,14 +10,13 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use Jenssegers\Agent\Agent;
-use Stevebauman\Location\Facades\Location;
 
 class SendResetMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $email;
-    protected $location;
+    protected $ipaddress;
     protected $agent;
 
     /**
@@ -29,7 +28,7 @@ class SendResetMail implements ShouldQueue
     {
         $ipaddress = '82.211.217.109';
         $this->email = $email;
-        $this->location = (array) Location::get($ipaddress);
+        $this->ipaddress = $ipaddress;
         $this->agent = $agent;
     }
 
@@ -49,11 +48,11 @@ class SendResetMail implements ShouldQueue
         // Send e-mail, either reset link, or info about user not found.
         if ($user == null) {
             // User not found
-            Mail::to($user = [['email' => $this->email]])->send(new \App\Mail\EmailNotFound($user[0],$this->location,$this->agent));
+            Mail::to($user = [['email' => $this->email]])->send(new \App\Mail\EmailNotFound($user[0],$this->agent));
         }
         else
         {
-            Mail::to($user = [['name' => $user['name'],'email' => $this->email]])->send(new \App\Mail\SendPasswordLink($user[0],$this->location,$this->agent));
+            Mail::to($user = [['name' => $user['name'],'email' => $this->email]])->send(new \App\Mail\SendPasswordLink($user[0],$this->agent));
 
         }
 
