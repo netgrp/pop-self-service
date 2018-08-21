@@ -22,8 +22,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/resetPassword', function (Request $request) {
 	$validated = $request->validate([
 		'email' => 'required|email',
-		'consent' => 'required|boolean|true',
+		'consent' => 'required|boolean',
 	]);
+
+	// Bedre løsning på dettte!
+	if (!$validated['consent']) {
+		return 'no consent';
+	}
 
 	$agent = new Agent();
 

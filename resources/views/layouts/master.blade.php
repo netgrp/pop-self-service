@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="profile" href="http://gmpg.org/xfn/11">
         <link rel="stylesheet" href="/css/bootstrap.css">
         <style type="text/css" media="all">
@@ -4710,7 +4711,7 @@
                 overflow: hidden
             }
         </style>
-        <title>Selvbetjening - P. O. Pedersen Kollegiet</title>
+        <title>Selvbetjening - {{ config('app.name') }}</title>
         <link rel='stylesheet' id='sydney-fonts-css' href='https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C400italic%2C600%7CRaleway%3A400%2C500%2C600' type='text/css' media='all'/>
         <style id='sydney-style-inline-css' type='text/css'>
             .site-title {
@@ -4844,7 +4845,6 @@
                 }
             }
         </style>
-        <!--[if lte IE 9]><link rel='stylesheet' id='sydney-ie9-css'  href='https://pop.k-net.dk/wp-content/themes/sydney/css/ie9.css' type='text/css' media='all' /> <![endif]-->
         <style type="text/css">
             .header-image {
                 background-image: url(https://pop.k-net.dk/wp-content/uploads/2017/08/cropped-Panorama.jpg);
@@ -4907,7 +4907,7 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-8 col-xs-12">
                                 <h1 class="site-title">
-                                    <a href="https://pop.k-net.dk/" rel="home">P. O. Pedersen Kollegiet</a>
+                                    <a href="{{ config('app.url') }}" rel="home">{{ config('app.name') }}</a>
                                 </h1>
                             </div>
                         </div>
@@ -4917,15 +4917,15 @@
             <div class="sydney-hero-area">
                 <div class="header-image">
                     <div class="overlay"></div>
-                    <img class="header-inner" src="https://pop.k-net.dk/wp-content/uploads/2017/08/cropped-Panorama.jpg" width="1920" alt="P. O. Pedersen Kollegiet" title="P. O. Pedersen Kollegiet">
+                    <img class="header-inner" src="https://pop.k-net.dk/wp-content/uploads/2017/08/cropped-Panorama.jpg" width="1920" alt="{{ config('app.name') }}" title="{{ config('app.name') }}">
                 </div>
             </div>
             <div id="content" class="page-wrap">
                 <div class="container content-wrapper">
                     <div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">
                         <span property="itemListElement" typeof="ListItem">
-                            <a property="item" typeof="WebPage" title="Go to P. O. Pedersen Kollegiet." href="https://pop.k-net.dk" class="home">
-                                <span property="name">P. O. Pedersen Kollegiet</span>
+                            <a property="item" typeof="WebPage" title="Gå til {{ config('app.name') }}." href="{{ config('app.url') }}" class="home">
+                                <span property="name">{{ config('app.name') }}</span>
                             </a>
                             <meta property="position" content="1">
                         </span>
@@ -4967,11 +4967,8 @@
                     </div>
                 </div>
             </div>
-            <a class="go-top">
-                <i class="fa fa-angle-up"></i>
-            </a>
             <footer id="colophon" class="site-footer" role="contentinfo">
-                <div class="site-info container">&copy;2018, P. O. Pedersen Kollegiet</div>
+                <div class="site-info container">&copy;{{ date('Y') }}, {{ config('app.name') }}</div>
             </footer>
         </div>
     </body>

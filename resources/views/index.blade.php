@@ -50,8 +50,9 @@ Selvbetjening - nulstil kodeord
 	<noscript>Siden virker ikke uden JavaScript</noscript>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js" integrity="sha256-FtWfRI+thWlNz2sB3SJbwKx5PgMyKIVgwHCTwa3biXc=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js" integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
+<div id="app"></div>
+
+<script src="/js/app.js"></script>
 
         <script>
             Vue.component('user-consent', {

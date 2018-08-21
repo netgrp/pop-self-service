@@ -16,7 +16,14 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('reset-request', require('./components/ResetRequest.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    	data: {
+	    	consent: false,
+	    	loading: false,
+	    	email: '',
+	    	sendok: null,
+	    },
 });
