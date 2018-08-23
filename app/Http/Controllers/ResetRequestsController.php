@@ -18,20 +18,30 @@ class ResetRequestsController extends Controller
     {
         // Show it by the id
         $user = json_decode($pass->user);
+        $user->username = "EMIL@ekx.dk";
+        $userinfo = [];
 
         // Check if username matches e-mail
         if ($pass->email != $user->username) {
-            // Do this if username isn't the email
-            echo "Username isn't email";
+            $userinfo['email'] = $pass->email;
         }
 
         // Skal brugernavnstjek tillade e-mail, eller skal dette tjek blot fjernes hvis brugernavn er e-mail? Så kan regex ændres til /^[a-z0-9]*$/
         if (!preg_match('/^[a-z0-9@.]*$/', $user->username)) {
-            // Do this if the username contains anything else than a-z0-9
-            echo "Username format is bad";
+            $userinfo['normalized'] = preg_replace('/[^a-z0-9@.]/', '',strtolower($user->username));
         }
 
-        // return view?
+        // Hvis normalized brugernavn er e-mail, så skal den ik stå dobbelt
+        if ($userinfo['normalized'] == $userinfo['email']) {
+            unset($userinfo['email']);
+        }
+
+        // Hvis nyt brugernavn forslås, skal orignal inkluderes.
+        if ($userinfo != []) {
+            $userinfo['unchanged'] = $user->username;
+        }
+
+        return view('show', compact('userinfo'));
     }
 
     public function store(Request $request)
@@ -39,7 +49,7 @@ class ResetRequestsController extends Controller
         $validated = $request->validate([
         'email' => 'required|email',
         'consent' => 'required|boolean',
-    ]);
+        ]);
 
         // Bedre løsning på dettte!
         if (!$validated['consent']) {
@@ -54,5 +64,13 @@ class ResetRequestsController extends Controller
         'roomok' => true,
         'sendok' => true,
         ];
+    }
+
+    public function patch(Request $request)
+    {
+        $validated = $request->validat([
+            'username_reset' => 'required|nullable|in:normalize,email',
+            'password' => 'required|confirmed',
+        ]);
     }
 }

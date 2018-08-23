@@ -18,7 +18,7 @@
 			</p>
 		</div>
 		<div v-if="consent">
-			<form @submit="sendResetRequest">
+			<form @submit.prevent="sendResetRequest">
 			  <div class="form-group">
 			    <label for="Email">E-mail</label>
 			    <input type="email" class="form-control" id="Email" v-model="email" aria-describedby="emailHelp" placeholder="E-mail" required :disabled="sendok || loading">
@@ -54,7 +54,6 @@
 	    },
 	    methods: {
 	        sendResetRequest() {
-	        	event.preventDefault();
 	        	this.loading = true;
 	        	axios.post('/resetPassword', {
 	            	consent: this.consent,

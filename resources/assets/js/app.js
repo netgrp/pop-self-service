@@ -15,8 +15,9 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('reset-request', require('./components/ResetRequest.vue'));
+Vue.component('reset-password', require('./components/ResetPassword.vue'));
+
 
 const app = new Vue({
     el: '#app',
