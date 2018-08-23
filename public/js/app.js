@@ -1104,13 +1104,7 @@ Vue.component('example-component', __webpack_require__(38));
 Vue.component('reset-request', __webpack_require__(41));
 
 var app = new Vue({
-  el: '#app',
-  data: {
-    consent: false,
-    loading: false,
-    email: '',
-    sendok: null
-  }
+  el: '#app'
 });
 
 /***/ }),
@@ -33120,25 +33114,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    methods: {
-        sendResetRequest: function sendResetRequest() {
-            var _this = this;
+							data: function data() {
+														return {
+																					consent: false,
+																					loading: false,
+																					email: '',
+																					sendok: null
+														};
+							},
 
-            event.preventDefault();
-            this.loading = true;
-            axios.post('/api/resetPassword', {
-                consent: this.consent,
-                email: this.email
-            }).then(function (reponse) {
-                _this.sendok = reponse.data['sendok'];
-                _this.loading = false;
-            }).catch(function (error) {
-                return alert(error);
-            });
-        }
-    }
+							methods: {
+														sendResetRequest: function sendResetRequest() {
+																					var _this = this;
+
+																					event.preventDefault();
+																					this.loading = true;
+																					axios.post('/resetPassword', {
+																												consent: this.consent,
+																												email: this.email
+																					}).then(function (reponse) {
+																												_this.sendok = reponse.data['sendok'];
+																												_this.loading = false;
+																					}).catch(function (error) {
+																												return alert(error);
+																					});
+														}
+							}
 });
 
 /***/ }),
@@ -33149,9 +33192,174 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._t("default")], 2)
+  return _c("div", [
+    !_vm.consent
+      ? _c("div", [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "p",
+            [
+              _vm._v(
+                "\n\t\t\tJeg bekræfter at jeg kun vil bruge denne selvbetjeningsportal til at nulstille mit eget kodeord, ydermere at\n\t\t\t"
+              ),
+              _vm._m(1),
+              _vm._v(" "),
+              _c("center", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.consent = true
+                      }
+                    }
+                  },
+                  [_vm._v("Accepter og fortsæt")]
+                )
+              ])
+            ],
+            1
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.consent
+      ? _c("div", [
+          _c(
+            "form",
+            { on: { submit: _vm.sendResetRequest } },
+            [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "Email" } }, [_vm._v("E-mail")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.email,
+                      expression: "email"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "email",
+                    id: "Email",
+                    "aria-describedby": "emailHelp",
+                    placeholder: "E-mail",
+                    required: "",
+                    disabled: _vm.sendok || _vm.loading
+                  },
+                  domProps: { value: _vm.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.email = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "small",
+                  {
+                    staticClass: "form-text text-muted",
+                    attrs: { id: "emailHelp" }
+                  },
+                  [_vm._v("Angiv din e-mail addresse.")]
+                )
+              ]),
+              _vm._v(" "),
+              _vm.sendok === false
+                ? _c("div", { staticClass: "alert alert-danger" }, [
+                    _c("strong", [_vm._v("Fejl!")]),
+                    _vm._v(
+                      " Kan ikke sende dig en mail lige nu. Prøv igen senere.\n\t\t\t"
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.sendok
+                ? _c("div", { staticClass: "alert alert-success" }, [
+                    _c("strong", [_vm._v("Success!")]),
+                    _vm._v(
+                      " Vi har sendt dig en mail med yderligere instrukser.\n\t\t    "
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.sendok !== true
+                ? _c("center", [
+                    _vm.loading
+                      ? _c("input", {
+                          staticClass: "btn btn-secondary",
+                          attrs: {
+                            type: "submit",
+                            disabled: "",
+                            value: "Vent venligst.."
+                          }
+                        })
+                      : _vm.email === ""
+                        ? _c("input", {
+                            staticClass: "btn btn-secondary",
+                            attrs: {
+                              type: "submit",
+                              disabled: "",
+                              value: "Nulstil kodeord"
+                            }
+                          })
+                        : _c("input", {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "submit", value: "Nulstil kodeord" },
+                            on: { click: _vm.sendResetRequest }
+                          })
+                  ])
+                : _vm._e()
+            ],
+            1
+          )
+        ])
+      : _vm._e()
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("\n\t\t\tHer kan du "),
+      _c("b", [_vm._v("nulstille det kodeord")]),
+      _vm._v(" du bruger til at gå på "),
+      _c("b", [
+        _vm._v("kollegiets wifi, og på vores bookingsystem (book.pop.k-net.dk)")
+      ]),
+      _vm._v(".\n\t\t")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", [
+      _c("li", [
+        _vm._v(
+          "Information om mit besøg vil blive gemt, herunder (men ikke begrænset til) information om min browser og min IP-addresse"
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _vm._v(
+          "Misbrug vil blive anmeldt og betragtes som grov overtrædelse af brugerklæringen. Har du opdaget et sikkerhedsproblem, så skriv til netværksudvalget, kontaktoplysninger er i højre side."
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

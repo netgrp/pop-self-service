@@ -20,10 +20,4 @@ Vue.component('reset-request', require('./components/ResetRequest.vue'));
 
 const app = new Vue({
     el: '#app',
-    	data: {
-	    	consent: false,
-	    	loading: false,
-	    	email: '',
-	    	sendok: null,
-	    },
 });

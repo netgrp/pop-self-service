@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,3 +14,4 @@
 
 Route::get('/', 'ResetRequestsController@index');
 Route::get('/reset/{pass}', 'ResetRequestsController@show')->name('reset.show');
+Route::post('/resetPassword', 'ResetRequestsController@store');

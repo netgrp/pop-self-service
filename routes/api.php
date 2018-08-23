@@ -1,9 +1,5 @@
 <?php
 
-use App\Jobs\SendResetMail;
-use Illuminate\Http\Request;
-use Jenssegers\Agent\Agent;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,25 +13,4 @@ use Jenssegers\Agent\Agent;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
-
-Route::post('/resetPassword', function (Request $request) {
-	$validated = $request->validate([
-		'email' => 'required|email',
-		'consent' => 'required|boolean',
-	]);
-
-	// Bedre løsning på dettte!
-	if (!$validated['consent']) {
-		return 'no consent';
-	}
-
-	$agent = new Agent();
-
-	SendResetMail::dispatch($validated['email'],$request->ip(),$agent,$request->header('user-agent'));
-
-    return [
-    	'roomok' => true,
-    	'sendok' => true,
-    ];
 });
