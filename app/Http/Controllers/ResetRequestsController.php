@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\SendResetMail;
+use App\Knet;
 use App\ResetRequests;
 use Illuminate\Http\Request;
 use Jenssegers\Agent\Agent;
@@ -40,6 +41,7 @@ class ResetRequestsController extends Controller
         }
 
         // Skal brugernavnstjek tillade e-mail, eller skal dette tjek blot fjernes hvis brugernavn er e-mail? Så kan regex ændres til /^[a-z0-9]*$/
+        // BEMÆRK: DENNE ÆNDRING ER HARDCODED MERE END EN GANG I KODEN, UNDEN FUNKTION!
         if (!preg_match('/^[a-z0-9@.]*$/', $user->username)) {
             $userinfo['normalized'] = preg_replace('/[^a-z0-9@.]/', '',strtolower($user->username));
         }
@@ -54,14 +56,14 @@ class ResetRequestsController extends Controller
             $userinfo['unchanged'] = $user->username;
         }
 
-        return view('show', compact('userinfo'));
+        return view('show', compact('userinfo','pass'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-        'email' => 'required|email',
-        'consent' => 'required|boolean',
+            'email' => 'required|email',
+            'consent' => 'required|boolean',
         ]);
 
         // Bedre løsning på dettte!
@@ -79,11 +81,41 @@ class ResetRequestsController extends Controller
         ];
     }
 
-    public function patch(Request $request)
+    public function patch(ResetRequests $pass, Request $request)
     {
-        $validated = $request->validat([
-            'username_reset' => 'required|nullable|in:normalize,email',
+        $validated = $request->validate([
+            'username_reset' => 'nullable|in:normalize,email',
             'password' => 'required|confirmed',
         ]);
+
+        // Get the user
+        $user = json_decode($pass->user);
+
+        // Initilize K-net API
+        $knet = new Knet();
+
+        // Initilize username reset
+        $username_reset = '';
+
+        // Set username to e-mail if requested
+        if ($validated['username_reset'] == 'email')
+        {
+            $username_reset = $user->email;
+        }
+
+        // Normalize username if requested
+        if ($validated['username_reset'] == 'normalize')
+        {
+            $username_reset = preg_replace('/[^a-z0-9@.]/', '',strtolower($user->username));
+        }
+
+        // Patch user
+        $result = $knet->patchUser($user->url,$validated['password'],$username_reset);
+
+        // Mark requested as used, to prevent duplicate changes with same token
+
+        return [
+            'sendok' => $result,
+        ];
     }
 }

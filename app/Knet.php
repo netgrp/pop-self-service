@@ -126,9 +126,6 @@ class Knet extends Model
     		throw new \Exception('Url format is not a K-net user.');
     	}
 
-    	// User locked for testing to prevent mistakes DEBUG
-    	$url = 'https://k-net.dk/api/v2/network/user/8403/';
-
     	// Begind data array
     	$data = [];
 

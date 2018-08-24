@@ -14,4 +14,5 @@
 
 Route::get('/', 'ResetRequestsController@index');
 Route::get('/reset/{pass}', 'ResetRequestsController@show')->name('reset.show');
+Route::patch('/reset/{pass}', 'ResetRequestsController@patch');
 Route::post('/resetPassword', 'ResetRequestsController@store');

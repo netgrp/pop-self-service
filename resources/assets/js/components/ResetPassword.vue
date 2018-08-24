@@ -54,7 +54,7 @@
 
 <script>
 	export default {
-		props: ['userinfo'],
+		props: ['userinfo','token'],
 		data() {
 			return {
 				unchanged: null,
@@ -115,6 +115,19 @@
 	        sendResetRequest() {
 	        	if (this.password == this.password_confirmation && this.password != '') {
 	        		this.loading = true;
+		        	axios.patch('/reset/'+this.token, {
+		            	username_reset: this.username_reset,
+		            	password: this.password,
+		            	password_confirmation: this.password_confirmation,
+		            })
+		            .then(reponse => {
+		            	this.sendok = reponse.data['sendok'];
+		            	this.loading = false;
+		            })
+		            .catch(error => {
+		            	this.sendok = false;
+		            	this.loading = false;
+		            });
 	        	} else {
 	        		this.hasErrors = true;
 	        	}

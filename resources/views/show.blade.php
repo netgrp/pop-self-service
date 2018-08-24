@@ -8,7 +8,7 @@ Selvbetjening - nulstil kodeord - BETA version
 @section ('content')
 
 <div id="app">
-	<reset-password userinfo="{{ json_encode($userinfo) }}"></reset-password>
+	<reset-password userinfo="{{ json_encode($userinfo) }}" token="{{ $pass->pass }}"></reset-password>
 	<noscript>Siden virker ikke uden JavaScript</noscript>
 </div>
 
