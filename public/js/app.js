@@ -33045,7 +33045,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			consent: false,
 			loading: false,
 			email: '',
-			sendok: null
+			sendok: null,
+			reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
 		};
 	},
 
@@ -33065,6 +33066,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					return alert(error);
 				});
 			}
+		},
+
+		isEmailValid: function isEmailValid() {
+			return this.email == "" ? "" : this.reg.test(this.email);
 		}
 	}
 });
@@ -33195,7 +33200,7 @@ var render = function() {
                             value: "Vent venligst.."
                           }
                         })
-                      : _vm.email === ""
+                      : _vm.email === "" || !_vm.isEmailValid()
                         ? _c("input", {
                             staticClass: "btn btn-secondary",
                             attrs: {

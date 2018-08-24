@@ -34,7 +34,7 @@
 
 				<center v-if="sendok !== true">
 					<input type=submit v-if="loading" class="btn btn-secondary" disabled="" value="Vent venligst..">
-				    <input type=submit v-else-if="email === ''" class="btn btn-secondary" disabled value="Nulstil kodeord">
+				    <input type=submit v-else-if="email === '' || !isEmailValid()" class="btn btn-secondary" disabled value="Nulstil kodeord">
 				    <input type=submit v-else class="btn btn-primary" value="Nulstil kodeord">
 				</center>
 			</form>
@@ -50,6 +50,7 @@
 	        	loading: false,
 	        	email: '',
 	        	sendok: null,
+	        	reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
 	        };
 	    },
 	    methods: {
@@ -68,6 +69,9 @@
 		            .catch(error => alert(error));
 	        	}
 	        },
+	        isEmailValid: function() {
+				return (this.email == "")? "" : this.reg.test(this.email);
+			},
 	    }
 	}
 </script>
