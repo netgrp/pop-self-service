@@ -13,7 +13,7 @@ class ResetRequestsController extends Controller
     public function __construct() {
         $agent = new Agent();
         if ($agent->browser() == "IE") {
-            echo "Internet Explorer is not supported while in beta. Please use Chrome, Firefox, Safari og Edge.";
+            echo "Internet Explorer is not supported while in beta. Please use any other browser.";
             exit();
         }
         if ($agent->isRobot()) {
