@@ -25,6 +25,14 @@
 			    <small id="emailHelp" class="form-text text-muted">Angiv din e-mail addresse.</small>
 			  </div>
 
+			  <vue-recaptcha
+                  ref="recaptcha"
+                  @verify="onCaptchaVerified"
+                  @expired="onCaptchaExpired"
+                  size="invisible"
+                  v-bind:sitekey="sitekey">
+                </vue-recaptcha>
+
 				<div class="alert alert-danger" v-if="hasErrors">
 					<strong>Fejl!</strong> Indtast en gyldig e-mailadresse.
 				</div>
@@ -45,7 +53,10 @@
 </template>
 
 <script>
+	import VueRecaptcha from 'vue-recaptcha';
 	export default {
+		props: ['sitekey'],
+		components: { VueRecaptcha },
         data() {
 	  		return {
 	        	consent: false,
@@ -61,22 +72,30 @@
 	        	if (!this.loading && this.email != '' && this.consent && this.isEmailValid())
 	        	{
 	        		this.loading = true;
-		        	axios.post('/resetPassword', {
-		            	consent: this.consent,
-		            	email: this.email,
-		            })
-		            .then(reponse => {
-		            	this.sendok = reponse.data['sendok'];
-		            	this.loading = false;
-		            })
-		            .catch(error => {
-		            	this.sendok = false;
-		            	this.loading = false;
-		            });
+	        		this.$refs.recaptcha.execute();
 	        	}
 	        	else {
 	        		this.hasErrors = true;
 	        	}
+	        },
+	        onCaptchaVerified(recaptchaToken) {
+	        	this.$refs.recaptcha.reset();
+	        	axios.post('/resetPassword', {
+	            	consent: this.consent,
+	            	email: this.email,
+	            	recaptchaToken: recaptchaToken,
+	            })
+	            .then(reponse => {
+	            	this.sendok = reponse.data['sendok'];
+	            	this.loading = false;
+	            })
+	            .catch(error => {
+	            	this.sendok = false;
+	            	this.loading = false;
+	            });
+	        },
+	        onCaptchaExpired() {
+	        	this.$refs.recaptcha.reset();
 	        },
 	        isEmailValid: function() {
 				return (this.email == "")? "" : this.reg.test(this.email);
