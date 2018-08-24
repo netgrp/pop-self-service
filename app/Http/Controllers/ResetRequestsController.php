@@ -16,6 +16,8 @@ class ResetRequestsController extends Controller
 
     public function show(ResetRequests $pass)
     {
+        // VIGTIGT TILFØJ 24 timers begrænsing, UDLØB!
+
         // Show it by the id
         $user = json_decode($pass->user);
         $user->username = "EMIL@ekx.dk";

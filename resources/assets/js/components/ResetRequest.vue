@@ -35,7 +35,7 @@
 				<center v-if="sendok !== true">
 					<input type=submit v-if="loading" class="btn btn-secondary" disabled="" value="Vent venligst..">
 				    <input type=submit v-else-if="email === ''" class="btn btn-secondary" disabled value="Nulstil kodeord">
-				    <input type=submit v-else @click="sendResetRequest" class="btn btn-primary" value="Nulstil kodeord">
+				    <input type=submit v-else class="btn btn-primary" value="Nulstil kodeord">
 				</center>
 			</form>
 		</div>
@@ -54,16 +54,19 @@
 	    },
 	    methods: {
 	        sendResetRequest() {
-	        	this.loading = true;
-	        	axios.post('/resetPassword', {
-	            	consent: this.consent,
-	            	email: this.email,
-	            })
-	            .then(reponse => {
-	            	this.sendok = reponse.data['sendok'];
-	            	this.loading = false;
-	            })
-	            .catch(error => alert(error));
+	        	if (!this.loading && this.email != '' && this.consent)
+	        	{
+	        		this.loading = true;
+		        	axios.post('/resetPassword', {
+		            	consent: this.consent,
+		            	email: this.email,
+		            })
+		            .then(reponse => {
+		            	this.sendok = reponse.data['sendok'];
+		            	this.loading = false;
+		            })
+		            .catch(error => alert(error));
+	        	}
 	        },
 	    }
 	}

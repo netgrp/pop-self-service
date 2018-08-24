@@ -1,5 +1,4 @@
-@component('mail::message')
-PREHEADER: Vi har modtaget en anmodning om at nulstille din kode med denne e-mail adresse. ({{ $user['email'] }})
+@component('mail::message', ['preheader' => 'Vi har modtaget en anmodning om at nulstille din kode med denne e-mail adresse. ('.$user['email'].')'])
 
 # Hej
 

@@ -33040,31 +33040,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-							data: function data() {
-														return {
-																					consent: false,
-																					loading: false,
-																					email: '',
-																					sendok: null
-														};
-							},
+	data: function data() {
+		return {
+			consent: false,
+			loading: false,
+			email: '',
+			sendok: null
+		};
+	},
 
-							methods: {
-														sendResetRequest: function sendResetRequest() {
-																					var _this = this;
+	methods: {
+		sendResetRequest: function sendResetRequest() {
+			var _this = this;
 
-																					this.loading = true;
-																					axios.post('/resetPassword', {
-																												consent: this.consent,
-																												email: this.email
-																					}).then(function (reponse) {
-																												_this.sendok = reponse.data['sendok'];
-																												_this.loading = false;
-																					}).catch(function (error) {
-																												return alert(error);
-																					});
-														}
-							}
+			if (!this.loading && this.email != '' && this.consent) {
+				this.loading = true;
+				axios.post('/resetPassword', {
+					consent: this.consent,
+					email: this.email
+				}).then(function (reponse) {
+					_this.sendok = reponse.data['sendok'];
+					_this.loading = false;
+				}).catch(function (error) {
+					return alert(error);
+				});
+			}
+		}
+	}
 });
 
 /***/ }),
@@ -33204,8 +33206,7 @@ var render = function() {
                           })
                         : _c("input", {
                             staticClass: "btn btn-primary",
-                            attrs: { type: "submit", value: "Nulstil kodeord" },
-                            on: { click: _vm.sendResetRequest }
+                            attrs: { type: "submit", value: "Nulstil kodeord" }
                           })
                   ])
                 : _vm._e()

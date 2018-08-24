@@ -1,7 +1,7 @@
 @extends ('layouts.master')
 
 @section ('title')
-Selvbetjening - nulstil kodeord
+Selvbetjening - nulstil kodeord - BETA version
 @endsection
 
 

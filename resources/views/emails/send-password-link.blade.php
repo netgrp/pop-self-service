@@ -1,5 +1,4 @@
-@component('mail::message')
-PREHADER: Brug dette link til at nulstille dit kordeord. Linket er kun gyldigt i 24 timer.
+@component('mail::message', ['preheader' => 'Brug dette link til at nulstille dit kordeord. Linket er kun gyldigt i 24 timer.'])
 
 # Hej {{ $user['name'] }}
 
