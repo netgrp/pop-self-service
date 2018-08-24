@@ -30,6 +30,10 @@ class ResetRequestsController extends Controller
     public function show(ResetRequests $pass)
     {
         // VIGTIGT TILFØJ 24 timers begrænsing, UDLØB!
+        if (!$pass->valid)
+        {
+            return view('invalid');
+        }
 
         // Show it by the id
         $user = json_decode($pass->user);
@@ -83,6 +87,14 @@ class ResetRequestsController extends Controller
 
     public function patch(ResetRequests $pass, Request $request)
     {
+        // VIGTIGT TILFØJ 24 timers begrænsing, UDLØB!
+        if (!$pass->valid)
+        {
+            return [
+                'sendok' => false,
+            ];
+        }
+
         $validated = $request->validate([
             'username_reset' => 'nullable|in:normalize,email',
             'password' => 'required|confirmed',
@@ -113,6 +125,8 @@ class ResetRequestsController extends Controller
         $result = $knet->patchUser($user->url,$validated['password'],$username_reset);
 
         // Mark requested as used, to prevent duplicate changes with same token
+        $pass->completed = true;
+        $pass->save();
 
         return [
             'sendok' => $result,
