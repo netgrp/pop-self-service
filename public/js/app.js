@@ -1100,8 +1100,8 @@ window.Vue = __webpack_require__(35);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('reset-request', __webpack_require__(41));
-Vue.component('reset-password', __webpack_require__(49));
+Vue.component('reset-request', __webpack_require__(38));
+Vue.component('reset-password', __webpack_require__(41));
 
 var app = new Vue({
   el: '#app'
@@ -32939,18 +32939,15 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(4)))
 
 /***/ }),
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(9)
 /* script */
-var __vue_script__ = __webpack_require__(42)
+var __vue_script__ = __webpack_require__(39)
 /* template */
-var __vue_template__ = __webpack_require__(43)
+var __vue_template__ = __webpack_require__(40)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -32989,11 +32986,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 42 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -33046,6 +33045,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			loading: false,
 			email: '',
 			sendok: null,
+			hasErrors: false,
 			reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
 		};
 	},
@@ -33054,7 +33054,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		sendResetRequest: function sendResetRequest() {
 			var _this = this;
 
-			if (!this.loading && this.email != '' && this.consent && isEmailValid()) {
+			if (!this.loading && this.email != '' && this.consent && this.isEmailValid()) {
 				this.loading = true;
 				axios.post('/resetPassword', {
 					consent: this.consent,
@@ -33063,8 +33063,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					_this.sendok = reponse.data['sendok'];
 					_this.loading = false;
 				}).catch(function (error) {
-					return alert(error);
+					_this.sendok = false;
+					_this.loading = false;
 				});
+			} else {
+				this.hasErrors = true;
 			}
 		},
 
@@ -33075,7 +33078,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 43 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -33152,6 +33155,9 @@ var render = function() {
                   },
                   domProps: { value: _vm.email },
                   on: {
+                    keydown: function($event) {
+                      _vm.hasErrors = false
+                    },
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -33170,6 +33176,13 @@ var render = function() {
                   [_vm._v("Angiv din e-mail addresse.")]
                 )
               ]),
+              _vm._v(" "),
+              _vm.hasErrors
+                ? _c("div", { staticClass: "alert alert-danger" }, [
+                    _c("strong", [_vm._v("Fejl!")]),
+                    _vm._v(" Indtast en gyldig e-mailadresse.\n\t\t\t")
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _vm.sendok === false
                 ? _c("div", { staticClass: "alert alert-danger" }, [
@@ -33200,19 +33213,16 @@ var render = function() {
                             value: "Vent venligst.."
                           }
                         })
-                      : _vm.email === "" || !_vm.isEmailValid()
-                        ? _c("input", {
-                            staticClass: "btn btn-secondary",
-                            attrs: {
-                              type: "submit",
-                              disabled: "",
-                              value: "Nulstil kodeord"
-                            }
-                          })
-                        : _c("input", {
-                            staticClass: "btn btn-primary",
-                            attrs: { type: "submit", value: "Nulstil kodeord" }
-                          })
+                      : _c("input", {
+                          class: _vm.hasErrors
+                            ? "btn btn-secondary"
+                            : "btn btn-primary",
+                          attrs: {
+                            type: "submit",
+                            disabled: _vm.hasErrors,
+                            value: "Nulstil kodeord"
+                          }
+                        })
                   ])
                 : _vm._e()
             ],
@@ -33266,25 +33276,15 @@ if (false) {
 }
 
 /***/ }),
-/* 44 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(9)
 /* script */
-var __vue_script__ = __webpack_require__(51)
+var __vue_script__ = __webpack_require__(42)
 /* template */
-var __vue_template__ = __webpack_require__(50)
+var __vue_template__ = __webpack_require__(43)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -33323,264 +33323,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "form",
-      [
-        _c("div", { staticClass: "form-group" }, [
-          _vm._v("\n\t\t\t" + _vm._s(_vm.userinfo) + "\n\t\t    "),
-          _c("label", [_vm._v("Ændre brugernavn?")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.username,
-                expression: "username"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "username",
-              "aria-describedby": "usernameHelp",
-              disabled: ""
-            },
-            domProps: { value: _vm.username },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.username = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "small",
-            {
-              staticClass: "form-text text-muted",
-              attrs: { id: "usernameHelp" }
-            },
-            [_vm._v("Dit brugernavn")]
-          ),
-          _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._m(2)
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "Password" } }, [_vm._v("Nyt kodeord")]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.password,
-                expression: "password"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "password",
-              id: "Password",
-              "aria-describedby": "passwordHelp",
-              placeholder: "Nyt kodeord"
-            },
-            domProps: { value: _vm.password },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.password = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "small",
-            {
-              staticClass: "form-text text-muted",
-              attrs: { id: "passwordHelp" }
-            },
-            [_vm._v("Angiv dit nye kodeord.")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { attrs: { for: "PasswordConfirmed" } }, [
-            _vm._v("Gentag nyt kodeord")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.password_confirmation,
-                expression: "password_confirmation"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "password",
-              id: "PasswordConfirmed",
-              "aria-describedby": "passwordConfirmedHelp",
-              placeholder: "Gentag nyt kodeord"
-            },
-            domProps: { value: _vm.password_confirmation },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.password_confirmation = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "small",
-            {
-              staticClass: "form-text text-muted",
-              attrs: { id: "passwordConfirmedHelp" }
-            },
-            [_vm._v("Gentag dit nye kodeord.")]
-          )
-        ]),
-        _vm._v(" "),
-        _vm.sendok !== true
-          ? _c("center", [
-              _vm.loading
-                ? _c("input", {
-                    staticClass: "btn btn-secondary",
-                    attrs: {
-                      type: "submit",
-                      disabled: "",
-                      value: "Vent venligst.."
-                    }
-                  })
-                : _vm.email === ""
-                  ? _c("input", {
-                      staticClass: "btn btn-secondary",
-                      attrs: {
-                        type: "submit",
-                        disabled: "",
-                        value: "Nulstil kodeord (og brugernavn)"
-                      }
-                    })
-                  : _c("input", {
-                      staticClass: "btn btn-primary",
-                      attrs: {
-                        type: "submit",
-                        value: "Nulstil kodeord (og brugernavn)"
-                      },
-                      on: { click: _vm.sendResetRequest }
-                    })
-            ])
-          : _vm._e()
-      ],
-      1
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-check" }, [
-      _c("input", {
-        staticClass: "form-check-input",
-        attrs: {
-          type: "radio",
-          name: "exampleRadios",
-          id: "exampleRadios1",
-          value: "option1",
-          checked: ""
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "form-check-label", attrs: { for: "exampleRadios1" } },
-        [_vm._v("\n\t\t\t    Uændret.\n\t\t\t  ")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-check" }, [
-      _c("input", {
-        staticClass: "form-check-input",
-        attrs: {
-          type: "radio",
-          name: "exampleRadios",
-          id: "exampleRadios2",
-          value: "option2"
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "form-check-label", attrs: { for: "exampleRadios2" } },
-        [
-          _vm._v(
-            "\n\t\t\t    Normaliser brugernavn. Fjerner specialtegn og ændre alle store bogstaver til små bogstaver.\n\t\t\t  "
-          )
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-check disabled" }, [
-      _c("input", {
-        staticClass: "form-check-input",
-        attrs: {
-          type: "radio",
-          name: "exampleRadios",
-          id: "exampleRadios3",
-          value: "option3"
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "form-check-label", attrs: { for: "exampleRadios3" } },
-        [_vm._v("\n\t\t\t    Ændre til din e-mail adresse.\n\t\t\t  ")]
-      )
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-73e7ba23", module.exports)
-  }
-}
-
-/***/ }),
-/* 51 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33631,10 +33374,424 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['userinfo']
+	props: ['userinfo'],
+	data: function data() {
+		return {
+			unchanged: null,
+			email: null,
+			normalized: null,
+			password: '',
+			password_confirmation: '',
+			sendok: null,
+			loading: false,
+			username_reset: ''
+		};
+	},
+	mounted: function mounted() {
+		var temp = JSON.parse(this.userinfo);
+		this.unchanged = temp['unchanged'];
+		this.email = temp['email'];
+		this.normalized = temp['normalized'];
+	},
+
+	computed: {
+		username: {
+			get: function get() {
+				if (this.username_reset == '') {
+					return this.unchanged;
+				} else if (this.username_reset == 'normalize') {
+					return this.normalized;
+				} else if (this.username_reset == 'email') {
+					return this.email;
+				}
+			},
+			set: function set() {
+				return this.unchanged;
+			}
+		},
+		submitText: {
+			get: function get() {
+				if (this.username_reset == '') {
+					return "Nulstil kodeord";
+				} else {
+					return "Nulstil brugernavn og kodeord";
+				}
+			},
+			set: function set() {
+				if (this.username_reset == '') {
+					return "Nulstil kodeord";
+				} else {
+					return "Nulstil brugernavn og kodeord";
+				}
+			}
+		}
+	},
+	methods: {
+		sendResetRequest: function sendResetRequest() {
+			// Send stuff
+		}
+	}
 });
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "form",
+      [
+        _vm.username
+          ? _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Ændre brugernavn?")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.username,
+                    expression: "username"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "username",
+                  "aria-describedby": "usernameHelp",
+                  disabled: ""
+                },
+                domProps: { value: _vm.username },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.username = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "small",
+                {
+                  staticClass: "form-text text-muted",
+                  attrs: { id: "usernameHelp" }
+                },
+                [_vm._v("Dit brugernavn")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-check" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.username_reset,
+                      expression: "username_reset"
+                    }
+                  ],
+                  staticClass: "form-check-input",
+                  attrs: {
+                    type: "radio",
+                    id: "username_reset1",
+                    value: "",
+                    checked: ""
+                  },
+                  domProps: { checked: _vm._q(_vm.username_reset, "") },
+                  on: {
+                    change: function($event) {
+                      _vm.username_reset = ""
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-check-label",
+                    attrs: { for: "username_reset1" }
+                  },
+                  [_vm._v("\n\t\t\t    Uændret.\n\t\t\t  ")]
+                )
+              ]),
+              _vm._v(" "),
+              _vm.normalized
+                ? _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.username_reset,
+                          expression: "username_reset"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: {
+                        type: "radio",
+                        id: "username_reset2",
+                        value: "normalize"
+                      },
+                      domProps: {
+                        checked: _vm._q(_vm.username_reset, "normalize")
+                      },
+                      on: {
+                        change: function($event) {
+                          _vm.username_reset = "normalize"
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label",
+                        attrs: { for: "username_reset2" }
+                      },
+                      [
+                        _vm._v(
+                          "\n\t\t\t    Normaliser brugernavn. Fjerner specialtegn og ændre alle store bogstaver til små bogstaver.\n\t\t\t  "
+                        )
+                      ]
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.email
+                ? _c("div", { staticClass: "form-check disabled" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.username_reset,
+                          expression: "username_reset"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: {
+                        type: "radio",
+                        id: "username_reset3",
+                        value: "email"
+                      },
+                      domProps: {
+                        checked: _vm._q(_vm.username_reset, "email")
+                      },
+                      on: {
+                        change: function($event) {
+                          _vm.username_reset = "email"
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label",
+                        attrs: { for: "username_reset3" }
+                      },
+                      [
+                        _vm._v(
+                          "\n\t\t\t    Ændre til din e-mail adresse.\n\t\t\t  "
+                        )
+                      ]
+                    )
+                  ])
+                : _vm._e()
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "Password" } }, [_vm._v("Nyt kodeord")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.password,
+                expression: "password"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "password",
+              required: "",
+              id: "Password",
+              "aria-describedby": "passwordHelp",
+              placeholder: "Nyt kodeord"
+            },
+            domProps: { value: _vm.password },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.password = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "small",
+            {
+              staticClass: "form-text text-muted",
+              attrs: { id: "passwordHelp" }
+            },
+            [_vm._v("Angiv dit nye kodeord.")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "PasswordConfirmed" } }, [
+            _vm._v("Gentag nyt kodeord")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.password_confirmation,
+                expression: "password_confirmation"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "password",
+              required: "",
+              id: "PasswordConfirmed",
+              "aria-describedby": "passwordConfirmedHelp",
+              placeholder: "Gentag nyt kodeord"
+            },
+            domProps: { value: _vm.password_confirmation },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.password_confirmation = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "small",
+            {
+              staticClass: "form-text text-muted",
+              attrs: { id: "passwordConfirmedHelp" }
+            },
+            [_vm._v("Gentag dit nye kodeord.")]
+          )
+        ]),
+        _vm._v(" "),
+        _vm.sendok === false
+          ? _c("div", { staticClass: "alert alert-danger" }, [
+              _c("strong", [_vm._v("Fejl!")]),
+              _vm._v(
+                " Prøv igen senere. Fortsætter problemet så kontakt netgruppen.\n\t\t"
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.sendok
+          ? _c("div", { staticClass: "alert alert-success" }, [
+              _c("strong", [_vm._v("Success!")]),
+              _vm._v(" Din kode er nu nulstilt.\n\t    ")
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.sendok !== true
+          ? _c("center", [
+              _vm.loading
+                ? _c("input", {
+                    staticClass: "btn btn-secondary",
+                    attrs: {
+                      type: "submit",
+                      disabled: "",
+                      value: "Vent venligst.."
+                    }
+                  })
+                : _vm.password != _vm.password_confirmation ||
+                  _vm.password == ""
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.submitText,
+                          expression: "submitText"
+                        }
+                      ],
+                      staticClass: "btn btn-secondary",
+                      attrs: { type: "submit", disabled: "" },
+                      domProps: { value: _vm.submitText },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.submitText = $event.target.value
+                        }
+                      }
+                    })
+                  : _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.submitText,
+                          expression: "submitText"
+                        }
+                      ],
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "submit" },
+                      domProps: { value: _vm.submitText },
+                      on: {
+                        click: _vm.sendResetRequest,
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.submitText = $event.target.value
+                        }
+                      }
+                    })
+            ])
+          : _vm._e()
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-73e7ba23", module.exports)
+  }
+}
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

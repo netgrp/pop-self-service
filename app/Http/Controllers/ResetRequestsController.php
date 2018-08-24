@@ -20,7 +20,7 @@ class ResetRequestsController extends Controller
 
         // Show it by the id
         $user = json_decode($pass->user);
-        $user->username = "EMIL@ekx.dk";
+        $user->username = "Emil - 073";
         $userinfo = [];
 
         // Check if username matches e-mail
@@ -34,7 +34,7 @@ class ResetRequestsController extends Controller
         }
 
         // Hvis normalized brugernavn er e-mail, så skal den ik stå dobbelt
-        if ($userinfo['normalized'] == $userinfo['email']) {
+        if (isset($userinfo['normalized']) && isset($userinfo['email']) && $userinfo['normalized'] == $userinfo['email']) {
             unset($userinfo['email']);
         }
 

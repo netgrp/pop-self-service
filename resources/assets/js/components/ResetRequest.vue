@@ -21,10 +21,13 @@
 			<form @submit.prevent="sendResetRequest">
 			  <div class="form-group">
 			    <label for="Email">E-mail</label>
-			    <input type="email" class="form-control" id="Email" v-model="email" aria-describedby="emailHelp" placeholder="E-mail" required :disabled="sendok || loading">
+			    <input type="email" @keydown="hasErrors = false" class="form-control" id="Email" v-model="email" aria-describedby="emailHelp" placeholder="E-mail" required :disabled="sendok || loading">
 			    <small id="emailHelp" class="form-text text-muted">Angiv din e-mail addresse.</small>
 			  </div>
 
+				<div class="alert alert-danger" v-if="hasErrors">
+					<strong>Fejl!</strong> Indtast en gyldig e-mailadresse.
+				</div>
 				<div class="alert alert-danger" v-if="sendok === false">
 					<strong>Fejl!</strong> Kan ikke sende dig en mail lige nu. Prøv igen senere.
 				</div>
@@ -34,8 +37,7 @@
 
 				<center v-if="sendok !== true">
 					<input type=submit v-if="loading" class="btn btn-secondary" disabled="" value="Vent venligst..">
-				    <input type=submit v-else-if="email === '' || !isEmailValid()" class="btn btn-secondary" disabled value="Nulstil kodeord">
-				    <input type=submit v-else class="btn btn-primary" value="Nulstil kodeord">
+				    <input type=submit v-else :class="(hasErrors) ? 'btn btn-secondary' : 'btn btn-primary'" :disabled="hasErrors" value="Nulstil kodeord">
 				</center>
 			</form>
 		</div>
@@ -50,12 +52,13 @@
 	        	loading: false,
 	        	email: '',
 	        	sendok: null,
+	        	hasErrors: false,
 	        	reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
 	        };
 	    },
 	    methods: {
 	        sendResetRequest() {
-	        	if (!this.loading && this.email != '' && this.consent && isEmailValid())
+	        	if (!this.loading && this.email != '' && this.consent && this.isEmailValid())
 	        	{
 	        		this.loading = true;
 		        	axios.post('/resetPassword', {
@@ -66,7 +69,13 @@
 		            	this.sendok = reponse.data['sendok'];
 		            	this.loading = false;
 		            })
-		            .catch(error => alert(error));
+		            .catch(error => {
+		            	this.sendok = false;
+		            	this.loading = false;
+		            });
+	        	}
+	        	else {
+	        		this.hasErrors = true;
 	        	}
 	        },
 	        isEmailValid: function() {
