@@ -4924,7 +4924,7 @@
                 <div class="container content-wrapper">
                     <div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">
                         <span property="itemListElement" typeof="ListItem">
-                            <a property="item" typeof="WebPage" title="Gå til {{ config('app.name') }}." href="{{ config('app.url') }}" class="home">
+                            <a property="item" typeof="WebPage" title="Gå til {{ config('app.name') }}." href="https://pop.k-net.dk/" class="home">
                                 <span property="name">{{ config('app.name') }}</span>
                             </a>
                             <meta property="position" content="1">
