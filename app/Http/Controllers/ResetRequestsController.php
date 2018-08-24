@@ -41,7 +41,7 @@ class ResetRequestsController extends Controller
 
         // Check if username matches e-mail
         if ($pass->email != $user->username) {
-            $userinfo['email'] = $pass->email;
+            $userinfo['email'] = strtolower($pass->email);
         }
 
         // Skal brugernavnstjek tillade e-mail, eller skal dette tjek blot fjernes hvis brugernavn er e-mail? Så kan regex ændres til /^[a-z0-9]*$/
@@ -113,7 +113,7 @@ class ResetRequestsController extends Controller
         // Set username to e-mail if requested
         if ($validated['username_reset'] == 'email')
         {
-            $username_reset = $user->email;
+            $username_reset = strtolower($user->email);
         }
 
         // Normalize username if requested
