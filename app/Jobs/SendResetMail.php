@@ -29,7 +29,6 @@ class SendResetMail implements ShouldQueue
      */
     public function __construct($email,$ipaddress,Agent $agent,$userAgent)
     {
-        $ipaddress = '82.211.217.109';
         $this->email = $email;
         $this->ipaddress = $ipaddress;
         $this->agent = $agent;
