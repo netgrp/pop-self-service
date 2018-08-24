@@ -33381,6 +33381,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['userinfo'],
@@ -33393,6 +33395,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			password_confirmation: '',
 			sendok: null,
 			loading: false,
+			hasErrors: false,
 			username_reset: ''
 		};
 	},
@@ -33437,7 +33440,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	methods: {
 		sendResetRequest: function sendResetRequest() {
-			// Send stuff
+			if (this.password == this.password_confirmation && this.password != '') {} else {
+				this.hasErrors = true;
+			}
 		}
 	}
 });
@@ -33453,6 +33458,14 @@ var render = function() {
   return _c("div", [
     _c(
       "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.sendResetRequest($event)
+          }
+        }
+      },
       [
         _vm.username
           ? _c("div", { staticClass: "form-group" }, [
@@ -33636,6 +33649,9 @@ var render = function() {
             },
             domProps: { value: _vm.password },
             on: {
+              keydown: function($event) {
+                _vm.hasErrors = false
+              },
               input: function($event) {
                 if ($event.target.composing) {
                   return
@@ -33679,6 +33695,9 @@ var render = function() {
             },
             domProps: { value: _vm.password_confirmation },
             on: {
+              keydown: function($event) {
+                _vm.hasErrors = false
+              },
               input: function($event) {
                 if ($event.target.composing) {
                   return
@@ -33697,6 +33716,15 @@ var render = function() {
             [_vm._v("Gentag dit nye kodeord.")]
           )
         ]),
+        _vm._v(" "),
+        _vm.hasErrors
+          ? _c("div", { staticClass: "alert alert-danger" }, [
+              _c("strong", [_vm._v("Fejl!")]),
+              _vm._v(
+                " Koden må ikke være tom, og skal skrives ens to gange.\n\t\t"
+              )
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _vm.sendok === false
           ? _c("div", { staticClass: "alert alert-danger" }, [
@@ -33725,51 +33753,29 @@ var render = function() {
                       value: "Vent venligst.."
                     }
                   })
-                : _vm.password != _vm.password_confirmation ||
-                  _vm.password == ""
-                  ? _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.submitText,
-                          expression: "submitText"
-                        }
-                      ],
-                      staticClass: "btn btn-secondary",
-                      attrs: { type: "submit", disabled: "" },
-                      domProps: { value: _vm.submitText },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.submitText = $event.target.value
-                        }
+                : _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.submitText,
+                        expression: "submitText"
                       }
-                    })
-                  : _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.submitText,
-                          expression: "submitText"
+                    ],
+                    class: _vm.hasErrors
+                      ? "btn btn-secondary"
+                      : "btn btn-primary",
+                    attrs: { type: "submit", disabled: _vm.hasErrors },
+                    domProps: { value: _vm.submitText },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
                         }
-                      ],
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "submit" },
-                      domProps: { value: _vm.submitText },
-                      on: {
-                        click: _vm.sendResetRequest,
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.submitText = $event.target.value
-                        }
+                        _vm.submitText = $event.target.value
                       }
-                    })
+                    }
+                  })
             ])
           : _vm._e()
       ],

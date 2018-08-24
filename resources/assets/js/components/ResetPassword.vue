@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<form>
+		<form @submit.prevent="sendResetRequest">
 			<div class="form-group" v-if="username">
 			    <label>Ændre brugernavn?</label>
 			    <input type="username" class="form-control" v-model="username" aria-describedby="usernameHelp" disabled>
@@ -26,15 +26,18 @@
 			</div>
 			<div class="form-group">
 			    <label for="Password">Nyt kodeord</label>
-			    <input type="password" required class="form-control" id="Password" v-model="password" aria-describedby="passwordHelp" placeholder="Nyt kodeord">
+			    <input type="password" @keydown="hasErrors = false" required class="form-control" id="Password" v-model="password" aria-describedby="passwordHelp" placeholder="Nyt kodeord">
 			    <small id="passwordHelp" class="form-text text-muted">Angiv dit nye kodeord.</small>
 			</div>
 			<div class="form-group">
 			    <label for="PasswordConfirmed">Gentag nyt kodeord</label>
-			    <input type="password" required class="form-control" id="PasswordConfirmed" v-model="password_confirmation" aria-describedby="passwordConfirmedHelp" placeholder="Gentag nyt kodeord">
+			    <input type="password" @keydown="hasErrors = false" required class="form-control" id="PasswordConfirmed" v-model="password_confirmation" aria-describedby="passwordConfirmedHelp" placeholder="Gentag nyt kodeord">
 			    <small id="passwordConfirmedHelp" class="form-text text-muted">Gentag dit nye kodeord.</small>
 			</div>
 
+			<div class="alert alert-danger" v-if="hasErrors">
+				<strong>Fejl!</strong> Koden må ikke være tom, og skal skrives ens to gange.
+			</div>
 			<div class="alert alert-danger" v-if="sendok === false">
 				<strong>Fejl!</strong> Prøv igen senere. Fortsætter problemet så kontakt netgruppen.
 			</div>
@@ -44,8 +47,7 @@
 
 			<center v-if="sendok !== true">
 				<input type=submit v-if="loading" class="btn btn-secondary" disabled="" value="Vent venligst..">
-			    <input type=submit v-else-if="password != password_confirmation || password == ''" class="btn btn-secondary" disabled v-model="submitText">
-			    <input type=submit v-else @click="sendResetRequest" class="btn btn-primary" v-model="submitText">
+				<input type=submit v-else :class="(hasErrors) ? 'btn btn-secondary' : 'btn btn-primary'" :disabled="hasErrors" v-model="submitText">
 			</center>
 		</form>
 	</div>
@@ -63,6 +65,7 @@
 				password_confirmation: '',
 				sendok: null,
 	        	loading: false,
+	        	hasErrors: false,
 	        	username_reset: '',
 			};
 		},
@@ -108,7 +111,11 @@
 		},
 		methods: {
 	        sendResetRequest() {
-	        	// Send stuff
+	        	if (this.password == this.password_confirmation && this.password != '') {
+
+	        	} else {
+	        		this.hasErrors = true;
+	        	}
 	        },
 	    },
 	}
