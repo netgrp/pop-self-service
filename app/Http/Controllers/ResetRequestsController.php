@@ -68,7 +68,7 @@ class ResetRequestsController extends Controller
         $validated = $request->validate([
             'email' => 'required|email',
             'consent' => 'required|boolean',
-            'recaptchaToken'=>'required|recaptcha',
+            'g-recaptcha-response'=>'required|captcha',
         ]);
 
         // Bedre løsning på dettte!

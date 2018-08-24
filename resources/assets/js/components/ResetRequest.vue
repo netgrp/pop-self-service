@@ -83,7 +83,7 @@
 	        	axios.post('/resetPassword', {
 	            	consent: this.consent,
 	            	email: this.email,
-	            	recaptchaToken: recaptchaToken,
+	            	'g-recaptcha-response': recaptchaToken,
 	            })
 	            .then(reponse => {
 	            	this.sendok = reponse.data['sendok'];

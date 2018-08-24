@@ -13392,7 +13392,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.post('/resetPassword', {
 				consent: this.consent,
 				email: this.email,
-				recaptchaToken: recaptchaToken
+				'g-recaptcha-response': recaptchaToken
 			}).then(function (reponse) {
 				_this.sendok = reponse.data['sendok'];
 				_this.loading = false;

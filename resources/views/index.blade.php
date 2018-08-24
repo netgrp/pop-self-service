@@ -8,7 +8,7 @@ Selvbetjening - nulstil kodeord - BETA version
 @section ('content')
 
 <div id="app">
-	<reset-request sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></reset-request>
+	<reset-request sitekey="{{ env('NOCAPTCHA_SITEKEY') }}"></reset-request>
 	<noscript>Siden virker ikke uden JavaScript</noscript>
 </div>
 
