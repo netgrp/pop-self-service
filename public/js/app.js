@@ -33054,7 +33054,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		sendResetRequest: function sendResetRequest() {
 			var _this = this;
 
-			if (!this.loading && this.email != '' && this.consent) {
+			if (!this.loading && this.email != '' && this.consent && isEmailValid()) {
 				this.loading = true;
 				axios.post('/resetPassword', {
 					consent: this.consent,

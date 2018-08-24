@@ -55,7 +55,7 @@
 	    },
 	    methods: {
 	        sendResetRequest() {
-	        	if (!this.loading && this.email != '' && this.consent)
+	        	if (!this.loading && this.email != '' && this.consent && isEmailValid())
 	        	{
 	        		this.loading = true;
 		        	axios.post('/resetPassword', {
