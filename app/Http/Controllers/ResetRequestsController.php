@@ -9,6 +9,18 @@ use Jenssegers\Agent\Agent;
 
 class ResetRequestsController extends Controller
 {
+    public function __construct() {
+        $agent = new Agent();
+        if ($agent->browser() == "IE") {
+            echo "Internet Explorer is not supported while in beta. Please use Chrome, Firefox, Safari og Edge.";
+            exit();
+        }
+        if ($agent->isRobot()) {
+            echo "No robots allowed here.";
+            exit();
+        }
+    }
+
     public function index()
     {
         return view('index');
@@ -20,7 +32,6 @@ class ResetRequestsController extends Controller
 
         // Show it by the id
         $user = json_decode($pass->user);
-        $user->username = "Emil - 073";
         $userinfo = [];
 
         // Check if username matches e-mail
