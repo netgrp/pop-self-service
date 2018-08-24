@@ -1,4 +1,11 @@
-@component('mail::message', ['preheader' => 'Brug dette link til at nulstille dit kordeord. Linket er kun gyldigt i 24 timer.'])
+@component('mail::message', [
+	'preheader' => 'Brug dette link til at nulstille dit kordeord. Linket er kun gyldigt i 24 timer.',
+	'oneclickaction' => [
+		'body' => 'Nulstil kodeord',
+		'url' => $pass,
+		'description' => 'Brug knappen til at nulstille dit kodeord.',
+	],
+])
 
 # Hej {{ $user['name'] }}
 
