@@ -15,7 +15,7 @@ Du har for nyligt anmodet om at nulstille dit kodeord til din K-Net bruger hos {
 Nulstil dit kordord
 @endcomponent
 
-Denne anmodning blev modtaget fra en {{ $platform }} enhed med browseren {{ $browser }}. Hvis du ikke har lavet denne anmodning, så kan du blot se bort fra denne mail, eller [kontakte netgruppen]({{ env('SUPPORT_URL') }}), hvis du har sprøgsmål.
+Denne anmodning blev modtaget fra en {{ $platform }} enhed med browseren {{ $browser }}. Hvis du ikke har lavet denne anmodning, så kan du blot se bort fra denne mail, eller [kontakte netgruppen]({{ env('SUPPORT_URL') }}), hvis du har spørgsmål.
 
 Med venlig hilsen,<br>
 Netgruppen på {{ config('app.name') }}
