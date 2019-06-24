@@ -20,7 +20,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "vue-recaptcha": "^1.1.1",
-        "webpack": "^4.33.0"
+        "vue-recaptcha": "^1.2.0",
+        "webpack": "^4.35.0"
     }
 }
