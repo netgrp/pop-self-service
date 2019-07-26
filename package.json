@@ -21,6 +21,6 @@
     },
     "dependencies": {
         "vue-recaptcha": "^1.2.0",
-        "webpack": "^4.37.0"
+        "webpack": "^4.38.0"
     }
 }
