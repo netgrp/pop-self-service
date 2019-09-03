@@ -11,7 +11,7 @@
     },
     "devDependencies": {
         "axios": "^0.19.0",
-        "cross-env": "^5.2.0",
+        "cross-env": "^5.2.1",
         "laravel-mix": "^4.1.2",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.22.10",
@@ -21,6 +21,6 @@
     },
     "dependencies": {
         "vue-recaptcha": "^1.2.0",
-        "webpack": "^4.39.2"
+        "webpack": "^4.39.3"
     }
 }
