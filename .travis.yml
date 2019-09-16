@@ -1,0 +1,19 @@
+language: php
+php:
+  - 7.3
+
+services:
+  - mysql
+
+before_script:
+  - composer self-update
+  - composer install --no-interaction
+  - mysql -e 'CREATE DATABASE self-service;'
+  - cp .env.travis .env.testing
+  - php artisan key:generate --env=testing
+
+script:
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
