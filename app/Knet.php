@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Knet extends Model
 {
@@ -80,7 +81,7 @@ class Knet extends Model
     protected function generatePasswordHashes($password)
     {
         // Generate salt
-    	$salt = str_random(12);
+        $salt = Str::random(12);
 
         //Calculate new hashes
         return [
