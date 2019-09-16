@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.com/eKristensen/pop-self-service.svg?branch=master)](https://travis-ci.com/eKristensen/pop-self-service)
 [![codecov](https://codecov.io/gh/eKristensen/pop-self-service/branch/master/graph/badge.svg)](https://codecov.io/gh/eKristensen/pop-self-service)
+[![StyleCI](https://github.styleci.io/repos/145050174/shield?branch=master)](https://github.styleci.io/repos/145050174)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=eKristensen/pop-self-service)](https://dependabot.com)
 
 # pop-self-service
