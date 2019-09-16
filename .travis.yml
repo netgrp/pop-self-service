@@ -8,7 +8,7 @@ services:
 before_script:
   - composer self-update
   - composer install --no-interaction
-  - mysql -e 'CREATE DATABASE self-service;'
+  - mysql -e 'CREATE DATABASE self_service_test;'
   - cp .env.travis .env.testing
   - php artisan key:generate --env=testing
 
