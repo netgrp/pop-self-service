@@ -85,7 +85,7 @@ class Knet extends Model
 
         //Calculate new hashes
         return [
-            'password' => 'sha1$'.$salt.'$'.hash('sha1',$salt.$password,false),
+            'password' => 'sha1$'.$salt.'$'.hash('sha1', $salt.$password, false),
             'password_nt' => hash('md4', iconv('UTF-8', 'UTF-16LE', $password), false),
         ];
     }
@@ -119,38 +119,37 @@ class Knet extends Model
         }
     }
 
-    public function patchUser($url, $password = '',$username = '')
+    public function patchUser($url, $password = '', $username = '')
     {
-    	// Check url format, exception if wrong
-    	if (!preg_match('/^https:\/\/k-net\.dk\/api\/v2\/network\/user\/[0-9]{1,}\/$/',$url))
-    	{
-    		throw new \Exception('Url format is not a K-net user.');
-    	}
+        // Check url format, exception if wrong
+        if (!preg_match('/^https:\/\/k-net\.dk\/api\/v2\/network\/user\/[0-9]{1,}\/$/', $url)) {
+            throw new \Exception('Url format is not a K-net user.');
+        }
 
-    	// Begind data array
-    	$data = [];
+        // Begind data array
+        $data = [];
 
-    	// If new password, generate hashes, append to data array
-    	if ($password != '') {
-    		$data = array_merge($data,$this->generatePasswordHashes($password));
-    	}
+        // If new password, generate hashes, append to data array
+        if ($password != '') {
+            $data = array_merge($data, $this->generatePasswordHashes($password));
+        }
 
-    	// If username is set, then set username to input
-    	if ($username != '' && $username) {
-    		$data['username'] = $username;
-    	}
+        // If username is set, then set username to input
+        if ($username != '' && $username) {
+            $data['username'] = $username;
+        }
 
-    	// Extract local part
-    	preg_match('/\/api\/v2\/network\/user\/[0-9]{1,}\/$/', $url, $local);
+        // Extract local part
+        preg_match('/\/api\/v2\/network\/user\/[0-9]{1,}\/$/', $url, $local);
 
         // Send patch request
-        $o = $this->request($local[0],[],$data);
+        $o = $this->request($local[0], [], $data);
 
         // Confirm user is patched
         foreach ($data as $key => $value) {
-        	if ($value != $o[$key]) {
-        		throw new \Exception('Error patching user data.');
-        	}
+            if ($value != $o[$key]) {
+                throw new \Exception('Error patching user data.');
+            }
         }
 
         // Confirm

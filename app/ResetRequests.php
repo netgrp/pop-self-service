@@ -16,17 +16,12 @@ class ResetRequests extends Model
 
     public function getValidAttribute()
     {
-    	if ($this->completed)
-    	{
-    		return false;
-    	}
-    	else if (!$this->updated_at->addHours(24)->gt(Carbon::now()))
-    	{
-    		return false;
-    	}
-    	else
-    	{
-    		return true;
-    	}
+        if ($this->completed) {
+            return false;
+        } elseif (!$this->updated_at->addHours(24)->gt(Carbon::now())) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
