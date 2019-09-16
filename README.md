@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/eKristensen/pop-self-service.svg?branch=master)](https://travis-ci.com/eKristensen/pop-self-service)
+[![codecov](https://codecov.io/gh/eKristensen/pop-self-service/branch/master/graph/badge.svg)](https://codecov.io/gh/eKristensen/pop-self-service)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=eKristensen/pop-self-service)](https://dependabot.com)
 
 # pop-self-service
@@ -6,3 +8,7 @@ POP self service system. Only function right now is to reset password for K-net 
 # List of tests:
 
 -> API, Open all URLS, GET, PATCH, POST with and without data, correct error messages.
+
+# Codecov.io
+
+Token is saved in travis.ci as an hidden environment variable
