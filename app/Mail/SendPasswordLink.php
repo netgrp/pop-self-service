@@ -5,7 +5,6 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Jenssegers\Agent\Agent;
 
 class SendPasswordLink extends Mailable
@@ -27,17 +26,17 @@ class SendPasswordLink extends Mailable
     {
         $this->user = $user;
         $this->agent = $agent;
-        
+
         if ($this->agent->platform() != '') {
             $this->platform = $this->agent->platform();
         } else {
-            $this->platform = "Ukendt";
+            $this->platform = 'Ukendt';
         }
 
         if ($this->agent->browser() != '') {
             $this->browser = $this->agent->browser();
         } else {
-            $this->browser = "Ukendt";
+            $this->browser = 'Ukendt';
         }
 
         $this->pass = $pass;

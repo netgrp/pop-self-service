@@ -24,35 +24,36 @@ class Knet extends Model
         // Public cURL handle (we want to reuse connections)
         $this->ch = curl_init();
         $this->headers = [
-            'authorization' => 'Authorization: Basic ' . base64_encode($this->apikey),
+            'authorization' => 'Authorization: Basic '.base64_encode($this->apikey),
         ];
     }
 
-    protected function httpHeaders($o=[])
+    protected function httpHeaders($o = [])
     {
         $ret = $this->headers;
         if (isset($o['headers'])) {
             foreach ($o['headers'] as $key => &$val) {
-                $ret[strtolower($key)] = $key . ': ' . $val;
+                $ret[strtolower($key)] = $key.': '.$val;
             }
         }
+
         return array_values($ret);
     }
 
-    protected function request($path, $opts=[], $data=null)
+    protected function request($path, $opts = [], $data = null)
     {
         $hostname = (isset($opts['hostname'])) ? $opts['hostname'] : 'k-net.dk';
         $curlopts = [
-            CURLOPT_URL => 'https://' . $hostname . $path,
-            CURLOPT_HTTPHEADER => $this->httpHeaders($opts),
-            CURLOPT_CUSTOMREQUEST => ($data === null) ? 'GET' : 'PATCH',
-            CURLOPT_POSTFIELDS => ($data === null) ? null : $data,
-            CURLOPT_VERBOSE => isset($opts['debug']) ? $opts['debug'] : 0,
+            CURLOPT_URL            => 'https://'.$hostname.$path,
+            CURLOPT_HTTPHEADER     => $this->httpHeaders($opts),
+            CURLOPT_CUSTOMREQUEST  => ($data === null) ? 'GET' : 'PATCH',
+            CURLOPT_POSTFIELDS     => ($data === null) ? null : $data,
+            CURLOPT_VERBOSE        => isset($opts['debug']) ? $opts['debug'] : 0,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_CONNECTTIMEOUT => 20,
-            CURLOPT_TIMEOUT => 20,
-            CURLOPT_USE_SSL => CURLUSESSL_ALL,
-            CURLOPT_SSLVERSION => 6, // TLSv1.2
+            CURLOPT_TIMEOUT        => 20,
+            CURLOPT_USE_SSL        => CURLUSESSL_ALL,
+            CURLOPT_SSLVERSION     => 6, // TLSv1.2
         ];
         // Allow override of $curlopts.
         if (isset($opts['curl'])) {
@@ -75,6 +76,7 @@ class Knet extends Model
         if (!$resobj = @json_decode($result, true)) {
             throw new \Exception('Invalid response from server');
         }
+
         return $resobj;
     }
 
@@ -85,7 +87,7 @@ class Knet extends Model
 
         //Calculate new hashes
         return [
-            'password' => 'sha1$'.$salt.'$'.hash('sha1', $salt.$password, false),
+            'password'    => 'sha1$'.$salt.'$'.hash('sha1', $salt.$password, false),
             'password_nt' => hash('md4', iconv('UTF-8', 'UTF-16LE', $password), false),
         ];
     }
@@ -115,7 +117,7 @@ class Knet extends Model
         if (isset($matches[0])) {
             return $users[$matches[0]];
         } else {
-            return null;
+            return;
         }
     }
 

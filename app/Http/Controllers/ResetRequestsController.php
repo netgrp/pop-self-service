@@ -13,12 +13,12 @@ class ResetRequestsController extends Controller
     public function __construct()
     {
         $agent = new Agent();
-        if ($agent->browser() == "IE") {
-            echo "Internet Explorer is not supported while in beta. Please use any other browser.";
+        if ($agent->browser() == 'IE') {
+            echo 'Internet Explorer is not supported while in beta. Please use any other browser.';
             exit();
         }
         if ($agent->isRobot()) {
-            echo "No robots allowed here.";
+            echo 'No robots allowed here.';
             exit();
         }
     }
@@ -66,9 +66,9 @@ class ResetRequestsController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'email' => 'required|email',
-            'consent' => 'required|boolean',
-            'g-recaptcha-response'=>'required|captcha',
+            'email'               => 'required|email',
+            'consent'             => 'required|boolean',
+            'g-recaptcha-response'=> 'required|captcha',
         ]);
 
         // Bedre løsning på dettte!
@@ -97,7 +97,7 @@ class ResetRequestsController extends Controller
 
         $validated = $request->validate([
             'username_reset' => 'nullable|in:normalize,email',
-            'password' => 'required|confirmed',
+            'password'       => 'required|confirmed',
         ]);
 
         // Get the user
