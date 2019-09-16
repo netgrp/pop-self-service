@@ -24,6 +24,7 @@ class FrontpageLoadsTest extends TestCase
 
         $response->assertStatus(200);
 
+        // Check that something that should show is there
         $response->assertSee('reset-request sitekey=');
     }
 }
