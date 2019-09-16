@@ -63,7 +63,7 @@ class SendResetMail implements ShouldQueue
             Mail::to($user = [['email' => $this->email]])->send(new \App\Mail\EmailNotFound($user[0], $this->agent));
         } else {
             //Send e-mail
-            Mail::to($user = [['name' => $user['name'],'email' => $this->email]])->send(new \App\Mail\SendPasswordLink($user[0], $this->agent, route('reset.show', ['pass' => $resetRequest])));
+            Mail::to($user = [['name' => $user['name'], 'email' => $this->email]])->send(new \App\Mail\SendPasswordLink($user[0], $this->agent, route('reset.show', ['pass' => $resetRequest])));
         }
 
         // Log the attempt to reset in the database with ip, useragent, and $user

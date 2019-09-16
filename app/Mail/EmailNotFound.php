@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Jenssegers\Agent\Agent;
@@ -26,17 +25,17 @@ class EmailNotFound extends Mailable
     {
         $this->user = $user;
         $this->agent = $agent;
-        
+
         if ($this->agent->platform() != '') {
             $this->platform = $this->agent->platform();
         } else {
-            $this->platform = "Ukendt";
+            $this->platform = 'Ukendt';
         }
 
         if ($this->agent->browser() != '') {
             $this->browser = $this->agent->browser();
         } else {
-            $this->browser = "Ukendt";
+            $this->browser = 'Ukendt';
         }
     }
 
