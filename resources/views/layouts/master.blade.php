@@ -4957,9 +4957,9 @@
                                         <strong>Fejl på hjemmesiden?</strong>
                                     </p>
                                     <p>
-                                        Skriv til <a href="https://pop.k-net.dk/udvalg/netvaerksudvalget">Netværksudvalget</a>
+                                        Skriv til <a href="{{ env('SUPPORT_URL') }}">Netværksudvalget</a>
                                         <br/>
-                                        <a href="mailto:netgrp@pop.k-net.dk">netgrp@pop.k-net.dk</a>
+                                        <a href="mailto:{{ env('SUPPORT_MAIL') }}">{{ env('SUPPORT_MAIL') }}</a>
                                     </p>
                                 </div>
                             </aside>
