@@ -81,8 +81,8 @@ class ResetRequestsController extends Controller
         SendResetMail::dispatch($validated['email'], $request->ip(), $agent, $request->header('user-agent'));
 
         return [
-        'roomok' => true,
-        'sendok' => true,
+            'roomok' => true,
+            'sendok' => true,
         ];
     }
 
