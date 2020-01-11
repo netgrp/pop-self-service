@@ -9,8 +9,8 @@ use Jenssegers\Agent\Agent;
 
 class SendPasswordLink extends Mailable
 {
-    use Queueable, SerializesModels;
-
+    use Queueable;
+    use SerializesModels;
     protected $agent;
     public $user;
     public $platform;
