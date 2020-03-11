@@ -2,7 +2,7 @@
 	<div>
 		<div v-if="!consent">
 			<p>
-				Her kan du <b>nulstille det kodeord</b> du bruger til at gå på <b>kollegiets wifi, og på vores bookingsystem (book.pop.k-net.dk)</b>.
+				Her kan du <b>nulstille det kodeord</b> du bruger til at gå på <b>kollegiets wifi, og på vores bookingsystem (book.pop.dk)</b>.
 			</p>
 
 			<p>

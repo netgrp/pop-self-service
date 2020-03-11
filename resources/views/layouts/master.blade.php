@@ -4847,7 +4847,7 @@
         </style>
         <style type="text/css">
             .header-image {
-                background-image: url(https://pop.k-net.dk/wp-content/uploads/2017/08/cropped-Panorama.jpg);
+                background-image: url(https://pop.dk/wp-content/uploads/2017/08/cropped-Panorama.jpg);
                 display: block;
             }
 
@@ -4862,10 +4862,10 @@
                 }
             }
         </style>
-        <link rel="icon" href="https://pop.k-net.dk/wp-content/uploads/2017/08/cropped-icon-32x32.png" sizes="32x32"/>
-        <link rel="icon" href="https://pop.k-net.dk/wp-content/uploads/2017/08/cropped-icon-192x192.png" sizes="192x192"/>
-        <link rel="apple-touch-icon-precomposed" href="https://pop.k-net.dk/wp-content/uploads/2017/08/cropped-icon-180x180.png"/>
-        <meta name="msapplication-TileImage" content="https://pop.k-net.dk/wp-content/uploads/2017/08/cropped-icon-270x270.png"/>
+        <link rel="icon" href="https://pop.dk/wp-content/uploads/2017/08/cropped-icon-32x32.png" sizes="32x32"/>
+        <link rel="icon" href="https://pop.dk/wp-content/uploads/2017/08/cropped-icon-192x192.png" sizes="192x192"/>
+        <link rel="apple-touch-icon-precomposed" href="https://pop.dk/wp-content/uploads/2017/08/cropped-icon-180x180.png"/>
+        <meta name="msapplication-TileImage" content="https://pop.dk/wp-content/uploads/2017/08/cropped-icon-270x270.png"/>
         <style type="text/css" id="wp-custom-css">
 
             .site-title a:link, .site-title a:visited , .site-title a:hover, .site-title a:active, .slide-inner a:link, .slide-inner a:visited {
@@ -4917,14 +4917,14 @@
             <div class="sydney-hero-area">
                 <div class="header-image">
                     <div class="overlay"></div>
-                    <img class="header-inner" src="https://pop.k-net.dk/wp-content/uploads/2017/08/cropped-Panorama.jpg" width="1920" alt="{{ config('app.name') }}" title="{{ config('app.name') }}">
+                    <img class="header-inner" src="https://pop.dk/wp-content/uploads/2017/08/cropped-Panorama.jpg" width="1920" alt="{{ config('app.name') }}" title="{{ config('app.name') }}">
                 </div>
             </div>
             <div id="content" class="page-wrap">
                 <div class="container content-wrapper">
                     <div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">
                         <span property="itemListElement" typeof="ListItem">
-                            <a property="item" typeof="WebPage" title="Gå til {{ config('app.name') }}." href="https://pop.k-net.dk/" class="home">
+                            <a property="item" typeof="WebPage" title="Gå til {{ config('app.name') }}." href="https://pop.dk/" class="home">
                                 <span property="name">{{ config('app.name') }}</span>
                             </a>
                             <meta property="position" content="1">
