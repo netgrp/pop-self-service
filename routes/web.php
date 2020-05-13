@@ -11,7 +11,13 @@
 |
 */
 
+// Index
 Route::get('/', 'ResetRequestsController@index');
+
+// Password reset related routes
 Route::get('/reset/{pass}', 'ResetRequestsController@show')->name('reset.show');
 Route::patch('/reset/{pass}', 'ResetRequestsController@patch');
 Route::post('/resetPassword', 'ResetRequestsController@store');
+
+// Heartbeat health check
+Route::get('/heartbeat', 'HeartbeatController@index');
