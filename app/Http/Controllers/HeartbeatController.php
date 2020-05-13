@@ -49,7 +49,7 @@ class HeartbeatController extends Controller
     {
         $ch = curl_init();
         $curlConfig = [
-            CURLOPT_URL            => 'https://'.env('MAILGUN_ENDPOINT').'/v4/address/validate',
+            CURLOPT_URL            => 'https://api.mailgun.net/v4/address/validate',
             CURLOPT_TIMEOUT        => 1,
             CURLOPT_CONNECTTIMEOUT => 1,
             CURLOPT_RETURNTRANSFER => true,
