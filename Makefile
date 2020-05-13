@@ -9,6 +9,8 @@ install:
 	test -e .env || cp .env.example .env
 	composer install
 	php artisan key:generate
+        npm install
+        npm run prod
 
 # Migrates the database
 migrate:
@@ -17,6 +19,9 @@ migrate:
 # Update composer packages
 update:
 	composer update
+        npm install
+        npm update
+        npm run prod
 
 # Use when deployeing a new version of the application or setting it up for the first time
 deploy:
@@ -45,3 +50,5 @@ deploy-update:
 	composer install --no-dev
 	php artisan view:clear
 	php artisan cache:clear
+        npm install
+        npm run prod
