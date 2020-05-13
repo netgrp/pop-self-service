@@ -24,7 +24,8 @@ class HeartbeatController extends Controller
         }
 
         // Mailgun API
-        $this->checkMailgun();
+        // Disabled mailgun api check due to false positivies
+        // $this->checkMailgun();
 
         // Check recaptcha api
         // https://www.google.com/recaptcha/api/siteverify
