@@ -15,7 +15,7 @@ class Knet extends Model
     {
         // Check if libcurl is enabled
         if (!function_exists('curl_init')) {
-            die("ERROR: Please enable php-curl\n");
+            exit("ERROR: Please enable php-curl\n");
         }
 
         // API key from .env or directly
