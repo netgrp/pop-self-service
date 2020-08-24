@@ -94,7 +94,7 @@ class Knet extends Model
 
     public function getAllUsers()
     {
-        return $this->request('/api/v2/network/user/?page_size=0');
+        return $this->request('/api/v2/network/user/?page_size=0')['results'];
     }
 
     public function findByEmail($email)
