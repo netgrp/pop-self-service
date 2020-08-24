@@ -118,8 +118,6 @@ class Knet extends Model
                 return $users[$matches[0]];
             }
         }
-
-        return;
     }
 
     public function patchUser($url, $password = '', $username = '')
