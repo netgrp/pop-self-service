@@ -94,6 +94,8 @@ class Knet extends Model
 
     public function findByEmail($email)
     {
+        $email = strtolower($email);
+
         // Check for match on email and username.
         $search_fields = ['email', 'username'];
 
