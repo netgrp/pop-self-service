@@ -9,7 +9,7 @@
         "ext-curl": "*",
         "anhskohbo/no-captcha": "^3.1",
         "fideloper/proxy": "^4.0",
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "^7.0",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^2.4"
