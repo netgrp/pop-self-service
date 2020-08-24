@@ -92,33 +92,32 @@ class Knet extends Model
         ];
     }
 
-    public function getAllUsers()
-    {
-        return $this->request('/api/v2/network/user/?page_size=0')['results'];
-    }
-
     public function findByEmail($email)
     {
-        $email = strtolower($email);
-        $users = $this->getAllUsers();
+        // Check for match on email and username.
+        $search_fields = ['email', 'username'];
 
-        $matches = [];
+        foreach ($search_fields as $search_field) {
+            $users = $this->request('/api/v2/network/user/?'.$search_field.'='.$email)['results'];
 
-        foreach ($users as $key => $value) {
-            if (strtolower($value['username']) == $email || strtolower($value['email']) == $email) {
-                $matches[] = $key;
+            $matches = [];
+
+            foreach ($users as $key => $value) {
+                if (strtolower($value['username']) == $email || strtolower($value['email']) == $email) {
+                    $matches[] = $key;
+                }
+            }
+
+            if (count($matches) > 1) {
+                throw new \Exception('More than one entry found. Must be unique');
+            }
+
+            if (isset($matches[0])) {
+                return $users[$matches[0]];
             }
         }
 
-        if (count($matches) > 1) {
-            throw new \Exception('More than one entry found. Must be unique');
-        }
-
-        if (isset($matches[0])) {
-            return $users[$matches[0]];
-        } else {
-            return;
-        }
+        return;
     }
 
     public function patchUser($url, $password = '', $username = '')
