@@ -42,7 +42,7 @@ class Knet extends Model
 
     protected function request($path, $opts = [], $data = null)
     {
-        $hostname = (isset($opts['hostname'])) ? $opts['hostname'] : 'k-net.dk';
+        $hostname = (isset($opts['hostname'])) ? $opts['hostname'] : 'api.k-net.dk';
         $curlopts = [
             CURLOPT_URL            => 'https://'.$hostname.$path,
             CURLOPT_HTTPHEADER     => $this->httpHeaders($opts),
@@ -100,7 +100,7 @@ class Knet extends Model
         $search_fields = ['email', 'username'];
 
         foreach ($search_fields as $search_field) {
-            $users = $this->request('/api/v2/network/user/?'.$search_field.'='.$email)['results'];
+            $users = $this->request('/v2/network/user/?'.$search_field.'='.$email)['results'];
 
             $matches = [];
 
@@ -123,7 +123,7 @@ class Knet extends Model
     public function patchUser($url, $password = '', $username = '')
     {
         // Check url format, exception if wrong
-        if (!preg_match('/^https:\/\/k-net\.dk\/api\/v2\/network\/user\/[0-9]{1,}\/$/', $url)) {
+        if (!preg_match('/^https:\/\/api.k-net\.dk\/v2\/network\/user\/[0-9]{1,}\/$/', $url)) {
             throw new \Exception('Url format is not a K-net user.');
         }
 
@@ -141,7 +141,7 @@ class Knet extends Model
         }
 
         // Extract local part
-        preg_match('/\/api\/v2\/network\/user\/[0-9]{1,}\/$/', $url, $local);
+        preg_match('/\/v2\/network\/user\/[0-9]{1,}\/$/', $url, $local);
 
         // Send patch request
         $o = $this->request($local[0], [], $data);
