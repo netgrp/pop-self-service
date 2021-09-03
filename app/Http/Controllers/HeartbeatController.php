@@ -16,12 +16,14 @@ class HeartbeatController extends Controller
         $this->checkDatabase('', 'primary');
 
         // K-Net API
+        /*
         $knet = new Knet();
-        //$user = $knet->findByEmail('this-email-can-never-exist@pop.dk');
+        $user = $knet->findByEmail('this-email-can-never-exist@pop.dk');
         if ($user != null) {
             Log::error('Heartbeat: Unexpected response from K-net API.');
             abort(503); // Service Unavailable
         }
+        */
 
         // Mailgun API
         // Disabled mailgun api check due to false positivies
