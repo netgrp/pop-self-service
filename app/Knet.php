@@ -92,31 +92,26 @@ class Knet extends Model
         ];
     }
 
-    public function findByEmail($email)
+    public function findByEmail($email) // September 2021: email field removed so we only search the username field
     {
         $email = strtolower($email);
 
-        // Check for match on email and username.
-        $search_fields = ['email', 'username'];
+        $users = $this->request('/v2/network/user/?username='.$email)['results'];
 
-        foreach ($search_fields as $search_field) {
-            $users = $this->request('/v2/network/user/?'.$search_field.'='.$email)['results'];
+        $matches = [];
 
-            $matches = [];
-
-            foreach ($users as $key => $value) {
-                if (strtolower($value['username']) == $email || strtolower($value['email']) == $email) {
-                    $matches[] = $key;
-                }
+        foreach ($users as $key => $value) {
+            if (strtolower($value['username']) == $email) {
+                $matches[] = $key;
             }
+        }
 
-            if (count($matches) > 1) {
-                throw new \Exception('More than one entry found. Must be unique');
-            }
+        if (count($matches) > 1) {
+            throw new \Exception('More than one entry found. Must be unique');
+        }
 
-            if (isset($matches[0])) {
-                return $users[$matches[0]];
-            }
+        if (isset($matches[0])) {
+            return $users[$matches[0]];
         }
     }
 

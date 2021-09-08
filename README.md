@@ -13,3 +13,11 @@ POP self service system. Only function right now is to reset password for K-net 
 # Codecov.io
 
 Token is saved in travis.ci as an hidden environment variable
+
+## Laravel scheduler run
+
+https://laravel.com/docs/8.x/scheduling#running-the-scheduler
+
+Run as www-data or similar, NOT ROOT! Edit via e.g. <code>sudo crontab -u www-data -e</code> (if user is www-data)
+
+    * * * * * cd [Web application patch] && php artisan schedule:run >> /dev/null 2>&1

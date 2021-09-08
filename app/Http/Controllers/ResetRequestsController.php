@@ -39,27 +39,6 @@ class ResetRequestsController extends Controller
         $user = json_decode($pass->user);
         $userinfo = [];
 
-        // Check if username matches e-mail
-        if ($pass->email != $user->username) {
-            $userinfo['email'] = strtolower($pass->email);
-        }
-
-        // Skal brugernavnstjek tillade e-mail, eller skal dette tjek blot fjernes hvis brugernavn er e-mail? Så kan regex ændres til /^[a-z0-9]*$/
-        // BEMÆRK: DENNE ÆNDRING ER HARDCODED MERE END EN GANG I KODEN, UNDEN FUNKTION!
-        if (!preg_match('/^[a-z0-9@.]*$/', $user->username)) {
-            $userinfo['normalized'] = preg_replace('/[^a-z0-9@.]/', '', strtolower($user->username));
-        }
-
-        // Hvis normalized brugernavn er e-mail, så skal den ik stå dobbelt
-        if (isset($userinfo['normalized']) && isset($userinfo['email']) && $userinfo['normalized'] == $userinfo['email']) {
-            unset($userinfo['email']);
-        }
-
-        // Hvis nyt brugernavn forslås, skal orignal inkluderes.
-        if ($userinfo != []) {
-            $userinfo['unchanged'] = $user->username;
-        }
-
         return view('show', compact('userinfo', 'pass'));
     }
 
@@ -109,15 +88,7 @@ class ResetRequestsController extends Controller
         // Initilize username reset
         $username_reset = '';
 
-        // Set username to e-mail if requested
-        if ($validated['username_reset'] == 'email') {
-            $username_reset = strtolower($user->email);
-        }
-
-        // Normalize username if requested
-        if ($validated['username_reset'] == 'normalize') {
-            $username_reset = preg_replace('/[^a-z0-9@.]/', '', strtolower($user->username));
-        }
+        // Ignore username_reset. If $username_reset is '', then nothing is changed.
 
         // Patch user
         $result = $knet->patchUser($user->url, $validated['password'], $username_reset);
