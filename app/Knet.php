@@ -80,18 +80,6 @@ class Knet extends Model
         return $resobj;
     }
 
-    protected function generatePasswordHashes($password)
-    {
-        // Generate salt
-        $salt = Str::random(12);
-
-        //Calculate new hashes
-        return [
-            'password'    => 'sha1$'.$salt.'$'.hash('sha1', $salt.$password, false),
-            'password_nt' => hash('md4', iconv('UTF-8', 'UTF-16LE', $password), false),
-        ];
-    }
-
     public function findByEmail($email) // September 2021: email field removed so we only search the username field
     {
         $email = strtolower($email);
@@ -127,7 +115,7 @@ class Knet extends Model
 
         // If new password, generate hashes, append to data array
         if ($password != '') {
-            $data = array_merge($data, $this->generatePasswordHashes($password));
+            $data['set_password'] => $password];
         }
 
         // If username is set, then set username to input
