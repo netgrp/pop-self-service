@@ -129,13 +129,6 @@ class Knet extends Model
         // Send patch request
         $o = $this->request($local[0], [], $data);
 
-        // Confirm user is patched
-        foreach ($data as $key => $value) {
-            if ($value != $o[$key]) {
-                throw new \Exception('Error patching user data.');
-            }
-        }
-
         // Confirm
         return true;
     }
