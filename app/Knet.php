@@ -129,6 +129,26 @@ class Knet extends Model
         // Send patch request
         $o = $this->request($local[0], [], $data);
 
+        // Confirm username is patched if change was requested
+        if ($username != '' && $date['username'] != $o['username']) {
+            throw new \Exception('Error patching username in user data.');
+        }
+
+        // Confirm password was changed
+
+        // Parse password string
+        $password_parts = explode("$", $o['password']);
+
+        // Check hash type
+        if ($password_parts[0] != 'sha1') {
+            throw new \Exception('Error patching password in user data. Unexpeted hash type.');
+        }
+
+        // Check password is set correctly
+        if ($password_parts[2] != hash('sha1', $password_parts[1] . $password, false)) {
+            throw new \Exception('Error patching password in user data. Password was not set correctly.');
+        }
+
         // Confirm
         return true;
     }
