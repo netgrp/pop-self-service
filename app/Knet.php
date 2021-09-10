@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Knet extends Model
 {
@@ -25,8 +24,8 @@ class Knet extends Model
         $this->ch = curl_init();
         $this->headers = [
             'authorization' => 'Authorization: Basic '.base64_encode($this->apikey),
-            'content_type' => 'Content-Type: application/json',
-            'accept' => 'Accept: application/json',
+            'content_type'  => 'Content-Type: application/json',
+            'accept'        => 'Accept: application/json',
         ];
     }
 
@@ -140,7 +139,7 @@ class Knet extends Model
         // Confirm password was changed
 
         // Parse password string
-        $password_parts = explode("$", $o['password']);
+        $password_parts = explode('$', $o['password']);
 
         // Check hash type
         if ($password_parts[0] != 'sha1') {
@@ -148,7 +147,7 @@ class Knet extends Model
         }
 
         // Check password is set correctly
-        if ($password_parts[2] != hash('sha1', $password_parts[1] . $password, false)) {
+        if ($password_parts[2] != hash('sha1', $password_parts[1].$password, false)) {
             throw new \Exception('Error patching password in user data. Password was not set correctly.');
         }
 

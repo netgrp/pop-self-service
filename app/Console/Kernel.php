@@ -25,9 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function() {
-            ResetRequests::where('completed','=',0)
-                ->where('updated_at','<',Carbon\Carbon::now()->subDays('370'))->delete();
+        $schedule->call(function () {
+            ResetRequests::where('completed', '=', 0)
+                ->where('updated_at', '<', Carbon\Carbon::now()->subDays('370'))->delete();
         })->daily();
     }
 
