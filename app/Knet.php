@@ -116,9 +116,9 @@ class Knet extends Model
         // Begind data array
         $data = [];
 
-        // If new password, generate hashes, append to data array
+        // If new password, set a new password with the password setter
         if ($password != '') {
-            $data['set_password'] = $password;
+            $data['password_setter'] = $password;
         }
 
         // If username is set, then set username to input
