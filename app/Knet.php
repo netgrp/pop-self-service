@@ -25,6 +25,8 @@ class Knet extends Model
         $this->ch = curl_init();
         $this->headers = [
             'authorization' => 'Authorization: Basic '.base64_encode($this->apikey),
+            'content_type' => 'Content-Type: application/json',
+            'accept' => 'Accept: application/json',
         ];
     }
 
@@ -47,7 +49,6 @@ class Knet extends Model
             CURLOPT_URL            => 'https://'.$hostname.$path,
             CURLOPT_HTTPHEADER     => $this->httpHeaders($opts),
             CURLOPT_CUSTOMREQUEST  => ($data === null) ? 'GET' : 'PATCH',
-            CURLOPT_HTTPHEADER     => ['Content-Type:application/json']
             CURLOPT_POSTFIELDS     => ($data === null) ? null : json_encode($data),
             CURLOPT_VERBOSE        => isset($opts['debug']) ? $opts['debug'] : 0,
             CURLOPT_RETURNTRANSFER => 1,
