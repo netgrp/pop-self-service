@@ -23,6 +23,9 @@ class HeartbeatController extends Controller
             abort(503); // Service Unavailable
         }
 
+        // TODO
+        // Pwned Passwords API check - https://haveibeenpwned.com/Passwords
+
         // Mailgun API
         // Disabled mailgun api check due to false positivies
         // $this->checkMailgun();
