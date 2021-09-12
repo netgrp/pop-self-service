@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\ResetRequests;
+use Carbon\Carbon;
 
 class Kernel extends ConsoleKernel
 {
@@ -28,7 +29,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             ResetRequests::where('completed', '=', 0)
-                ->where('updated_at', '<', Carbon\Carbon::now()->subDays('370'))->delete();
+                ->where('updated_at', '<', Carbon::now()->subDays('370'))->delete();
         })->daily();
     }
 
