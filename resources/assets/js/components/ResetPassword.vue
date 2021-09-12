@@ -35,6 +35,9 @@
 			    <small id="passwordConfirmedHelp" class="form-text text-muted">Gentag dit nye kodeord.</small>
 			</div>
 
+			<div class="alert alert-danger" v-if="pwned">
+				<strong>Fejl!</strong> Koden er ikke sikker nok. Læs mere <a href="https://haveibeenpwned.com/Passwords">her</a>.
+			</div>
 			<div class="alert alert-danger" v-if="hasErrors">
 				<strong>Fejl!</strong> Koden må ikke være tom, og skal skrives ens to gange.
 			</div>
@@ -66,6 +69,7 @@
 	        	loading: false,
 	        	hasErrors: false,
 	        	username_reset: '',
+	        	pwned: false,
 			};
 		},
 		mounted() {
@@ -115,6 +119,7 @@
 	        sendResetRequest() {
 	        	if (this.password == this.password_confirmation && this.password != '') {
 	        		this.loading = true;
+	        		this.pwned = false;
 		        	axios.patch('/reset/'+this.token, {
 		            	username_reset: this.username_reset,
 		            	password: this.password,
@@ -125,7 +130,14 @@
 		            	this.loading = false;
 		            })
 		            .catch(error => {
-		            	this.sendok = false;
+		            	if (error.response) {
+		            		if (error.response.date['errors']['password'][0] == "validation.pwned") {
+		            			this.pwned = true;
+		            		}
+		            	}
+		            	else {
+		            		this.sendok = false;
+		            	}
 		            	this.loading = false;
 		            });
 	        	} else {
