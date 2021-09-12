@@ -131,7 +131,7 @@
 		            })
 		            .catch(error => {
 		            	if (error.response) {
-		            		if (error.response.date['errors']['password'][0] == "validation.pwned") {
+		            		if (error.response.data['errors']['password'][0] == "validation.pwned") {
 		            			this.pwned = true;
 		            		}
 		            	}
