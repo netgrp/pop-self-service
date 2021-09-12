@@ -76,7 +76,7 @@ class ResetRequestsController extends Controller
 
         $validated = $request->validate([
             'username_reset' => 'nullable|in:normalize,email',
-            'password'       => 'required|confirmed',
+            'password'       => 'required|string|min:6|pwned|confirmed',
         ]);
 
         // Get the user
