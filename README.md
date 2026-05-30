@@ -1,3 +1,9 @@
+> [!WARNING]
+> **This repository is archived and no longer actively maintained.**
+> It was last updated in September 2021. No new issues, pull requests, or
+> security reports will be addressed. If you depend on this code, please
+> fork or migrate to an alternative solution.
+
 [![Build Status](https://travis-ci.com/eKristensen/pop-self-service.svg?branch=master)](https://travis-ci.com/eKristensen/pop-self-service)
 [![codecov](https://codecov.io/gh/eKristensen/pop-self-service/branch/master/graph/badge.svg)](https://codecov.io/gh/eKristensen/pop-self-service)
 [![StyleCI](https://github.styleci.io/repos/145050174/shield?branch=master)](https://github.styleci.io/repos/145050174)
